@@ -1,18 +1,18 @@
+/* Telegram Mini App initialization */
 const tg = window.Telegram.WebApp;
 tg.expand();
 
+/* State */
 let current = 0;
 let answers = {};
-
 let lang = null;
-
 let t = null;
 
-
+/* DOM */
 const content = document.getElementById("content");
 const progressBar = document.getElementById("progress-bar");
 
-
+/* ---------- Language Selector ---------- */
 function renderLanguageSelector() {
   content.innerHTML = `
     <div class="card">
@@ -27,25 +27,33 @@ function renderLanguageSelector() {
   `;
 }
 
+/* ---------- Set Language ---------- */
 function setLanguage(selectedLang) {
-  lang = selectedLang;
-
-  if (!translations || !translations[lang]) {
-    alert("Language data not loaded");
+  if (!window.translations || !translations[selectedLang]) {
+    content.innerHTML = "<p>Xatolik: til maʼlumotlari yuklanmadi.</p>";
     return;
   }
 
+  lang = selectedLang;
   t = translations[lang];
-  render();
+  document.documentElement.lang = lang;
+
+  current = 0;
+  answers = {};
+
+  renderQuestion();
 }
 
-function render() {
-    if (!lang) {
+/* ---------- Render Question ---------- */
+function renderQuestion() {
+  if (!lang) {
     renderLanguageSelector();
     return;
   }
+
   const q = questions[current];
-  progressBar.style.width = ((current / questions.length) * 100) + "%";
+
+  progressBar.style.width = `${(current / questions.length) * 100}%`;
 
   if (!q) {
     content.innerHTML = `
@@ -54,7 +62,7 @@ function render() {
         <p>${t.thank_you || ""}</p>
       </div>
     `;
-    console.log("Answers:", answers);
+    console.log("Survey answers:", answers);
     return;
   }
 
@@ -62,7 +70,7 @@ function render() {
 
   if (q.type === "demographic") {
     q.options[lang].forEach(opt => {
-      html += `<button onclick="answer('${opt}')">${opt}</button>`;
+      html += `<button onclick="answer('${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
     });
   }
 
@@ -78,11 +86,12 @@ function render() {
   content.innerHTML = html;
 }
 
+/* ---------- Answer Handler ---------- */
 function answer(value) {
   answers[questions[current].id] = value;
   current++;
-  render();
+  renderQuestion();
 }
 
-
-render();
+/* ---------- Start ---------- */
+renderLanguageSelector();
