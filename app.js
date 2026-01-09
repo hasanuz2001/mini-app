@@ -29,6 +29,12 @@ function renderLanguageSelector() {
 
 function setLanguage(selectedLang) {
   lang = selectedLang;
+
+  if (!translations || !translations[lang]) {
+    alert("Language data not loaded");
+    return;
+  }
+
   t = translations[lang];
   render();
 }
