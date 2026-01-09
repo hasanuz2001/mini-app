@@ -4,28 +4,58 @@ tg.expand();
 let current = 0;
 let answers = {};
 
+let lang = null;
+
+let t = null;
+
+
 const content = document.getElementById("content");
 const progressBar = document.getElementById("progress-bar");
 
+
+function renderLanguageSelector() {
+  content.innerHTML = `
+    <div class="card">
+      <h3>Tilni tanlang</h3>
+      <p>Choose language / Выберите язык</p>
+
+      <button onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
+      <button onclick="setLanguage('uz_cyrl')">🇺🇿 Ўзбекча (кирил)</button>
+      <button onclick="setLanguage('ru')">🇷🇺 Русский</button>
+      <button onclick="setLanguage('en')">🇬🇧 English</button>
+    </div>
+  `;
+}
+
+function setLanguage(selectedLang) {
+  lang = selectedLang;
+  t = translations[lang];
+  render();
+}
+
 function render() {
+    if (!lang) {
+    renderLanguageSelector();
+    return;
+  }
   const q = questions[current];
   progressBar.style.width = ((current / questions.length) * 100) + "%";
 
   if (!q) {
     content.innerHTML = `
       <div class="card">
-        <h3>Rahmat!</h3>
-        <p>So‘rovnoma yakunlandi.</p>
+        <h3>${t.finish}</h3>
+        <p>${t.thank_you || ""}</p>
       </div>
     `;
     console.log("Answers:", answers);
     return;
   }
 
-  let html = `<div class="card"><p>${q.text}</p>`;
+  let html = `<div class="card"><p>${q.text[lang]}</p>`;
 
   if (q.type === "demographic") {
-    q.options.forEach(opt => {
+    q.options[lang].forEach(opt => {
       html += `<button onclick="answer('${opt}')">${opt}</button>`;
     });
   }
@@ -47,5 +77,6 @@ function answer(value) {
   current++;
   render();
 }
+
 
 render();
