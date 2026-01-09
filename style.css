@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  margin: 0;
+}
+
+#app {
+  max-width: 480px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #2a9df4;
+  color: white;
+  font-size: 16px;
+}
+
+button.secondary {
+  background: #ccc;
+  color: black;
+}
+
+.likert {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.likert label {
+  text-align: center;
+  font-size: 14px;
+}
+
+#progress {
+  height: 6px;
+  background: #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #2a9df4;
+  border-radius: 5px;
+}
