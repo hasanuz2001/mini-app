@@ -37,26 +37,26 @@ const questions = [
     uz: [
       "Ha, albatta oshiradi",
       "Menimcha yo‘q",
-      "Bilmadim, lekin sinab ko‘rish kerak",
-      "Mening o‘ylashimcha (izoh qoldiraman)"
+      "Bilmadim, lekin sinab ko‘rish kerak" //,
+      //"Mening fikrim quyidagicha:"
     ],
     uz_cyrl: [
       "Ҳа, албатта оширади",
       "Менимча йўқ",
-      "Билмадим, лекин синаб кўриш керак",
-      "Менинг фикрим қуйидагича:"
+      "Билмадим, лекин синаб кўриш керак"//,
+      //"Менинг фикрим қуйидагича:"
     ],
     ru: [
       "Да, безусловно повышает",
       "Скорее нет",
-      "Не уверен(а), но стоит попробовать",
-      "По моему мнению:"
+      "Не уверен(а), но стоит попробовать"//,
+      //"По моему мнению:"
     ],
     en: [
       "Yes, it definitely improves efficiency",
       "I don’t think so",
-      "I’m not sure, but it’s worth trying",
-      "In my opinion:"
+      "I’m not sure, but it’s worth trying"//,
+     // "In my opinion:"
     ]
   },
   open_option: true,
