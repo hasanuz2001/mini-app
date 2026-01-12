@@ -74,14 +74,9 @@ function render() {
   }
 
   if (q.type === "single_choice") {
-    q.options[safeLang].forEach(opt => {
-      // Skip "open comment" pseudo-option
-      if (
-        opt.toLowerCase().includes("Mening fikrim quyidagicha:") ||
-        opt.toLowerCase().includes("Менинг фикрим қуйидагича:") ||
-        opt.toLowerCase().includes("По моему мнению:") ||
-        opt.toLowerCase().includes("In my opinion:")
-      ) {
+    q.options[safeLang].forEach((opt, index) => {
+      // If this question has open_option, the LAST option is a pseudo-option for comments
+      if (q.open_option && index === q.options[safeLang].length - 1) {
         return;
       }
 
