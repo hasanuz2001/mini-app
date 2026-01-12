@@ -75,6 +75,15 @@ function render() {
       const safeOpt = opt.replace(/'/g, "\\'");
       html += `<button onclick="answer('${safeOpt}')">${opt}</button>`;
     });
+
+    if (q.open_option) {
+      html += `
+        <div style="margin-top:10px;">
+          <textarea id="openAnswer" placeholder="Izohingizni yozing (ixtiyoriy)" rows="3" style="width:100%;"></textarea>
+          <button style="margin-top:8px;" onclick="submitOpenAnswer()">Davom etish</button>
+        </div>
+      `;
+    }
   }
 
   if (q.type === "likert") {
@@ -91,6 +100,23 @@ function render() {
 
 function answer(value) {
   answers[questions[current].id] = value;
+  current++;
+  render();
+}
+
+function submitOpenAnswer() {
+  const text = document.getElementById("openAnswer")?.value || "";
+  const qId = questions[current].id;
+
+  if (!answers[qId]) {
+    answers[qId] = {};
+  }
+
+  answers[qId] = {
+    selected: answers[qId],
+    comment: text
+  };
+
   current++;
   render();
 }

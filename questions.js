@@ -44,19 +44,19 @@ const questions = [
       "Ҳа, албатта оширади",
       "Менимча йўқ",
       "Билмадим, лекин синаб кўриш керак",
-      "Менинг фикримча (изоҳ қолдираман)"
+      "Менинг фикрим қуйидагича:"
     ],
     ru: [
       "Да, безусловно повышает",
       "Скорее нет",
       "Не уверен(а), но стоит попробовать",
-      "По моему мнению (оставлю комментарий)"
+      "По моему мнению:"
     ],
     en: [
       "Yes, it definitely improves efficiency",
       "I don’t think so",
       "I’m not sure, but it’s worth trying",
-      "In my opinion (I will leave a comment)"
+      "In my opinion:"
     ]
   },
   open_option: true,
@@ -125,19 +125,19 @@ const questions = [
       "Раҳбарият аниқ тушунтириб берди",
       "Тушунтирди, лекин яна кўпроқ тушунтириши керак",
       "Бу ҳақда хабарим йўқ, лекин бу жуда муҳим",
-      "Менинг фикримча (изоҳ қолдираман)"
+      "Менинг фикрим қуйидагича:"
     ],
     ru: [
       "Да, руководство чётко всё объяснило",
       "Объяснили, но требуется более подробное разъяснение",
       "Я не был(а) проинформирован(а), но это очень важно",
-      "По моему мнению (оставлю комментарий)"
+      "По моему мнению:"
     ],
     en: [
       "Yes, management explained it clearly",
       "It was explained, but more clarification is needed",
       "I was not informed, but this is very important",
-      "In my opinion (I will leave a comment)"
+      "In my opinion:"
     ]
   },
   open_option: true,
@@ -165,19 +165,19 @@ const questions = [
       "Ҳа, бунга қўшиламан",
       "Қисман қўшиламан",
       "Масаланинг иккинчи томони ҳам бор, яхшилаб ўйлаш керак",
-      "Менинг фикримча (изоҳ қолдираман)"
+      "Менинг фикрим қуйидагича:"
     ],
     ru: [
       "Да, я с этим согласен(на)",
       "Частично согласен(на)",
       "Есть и другая сторона, это нужно тщательно продумать",
-      "По моему мнению (оставлю комментарий)"
+      "По моему мнению:"
     ],
     en: [
       "Yes, I agree with this",
       "I partially agree",
       "There is another side to this that needs careful consideration",
-      "In my opinion (I will leave a comment)"
+      "In my opinion:"
     ]
   },
   open_option: true,
@@ -205,19 +205,19 @@ const questions = [
       "Албатта олинади, доим шундай бўлган",
       "Бундай бўлади деб ўйламайман",
       "Бу жараёнда менинг фикрим муҳим эмас деб ҳисоблайман",
-      "Менинг фикримча (изоҳ қолдираман)"
+      "Менинг фикрим қуйидагича:"
     ],
     ru: [
       "Да, мнение специалистов всегда учитывается",
       "Я не думаю, что это так",
       "Я считаю, что моё мнение в этом процессе не важно",
-      "По моему мнению (оставлю комментарий)"
+      "По моему мнению:"
     ],
     en: [
       "Yes, experts’ opinions are always considered",
       "I do not think this is the case",
       "I believe my opinion is not important in this process",
-      "In my opinion (I will leave a comment)"
+      "In my opinion:"
     ]
   },
   open_option: true,
@@ -247,19 +247,19 @@ const questions = [
       "Ҳа, иш ўрнимни йўқотишим мумкин деб ўйлайман",
       "Сунъий интеллект билан бирга ишлайман, янги вазифалар юкланади",
       "Сунъий интеллект барибир мени тўлиқ алмаштира олмайди",
-      "Менинг фикримча (изоҳ қолдираман)"
+      "Менинг фикрим қуйидагича:"
     ],
     ru: [
       "Да, я считаю, что могу потерять работу",
       "Я буду работать вместе с ИИ, появятся новые задачи",
       "ИИ не сможет полностью меня заменить",
-      "По моему мнению (оставлю комментарий)"
+      "По моему мнению:"
     ],
     en: [
       "Yes, I think I might lose my job",
       "I will work alongside AI and take on new tasks",
       "AI will not be able to fully replace me",
-      "In my opinion (I will leave a comment)"
+      "In my opinion:"
     ]
   },
   open_option: true,
@@ -278,9 +278,9 @@ const questions = [
   },
   options: {
     uz: ["Qo‘shilaman", "Qisman qo‘shilaman", "Qo‘shilmayman", "Mening o‘ylashimcha (izoh qoldiraman)"],
-    uz_cyrl: ["Қўшиламан", "Қисман қўшиламан", "Қўшилмайман", "Менинг фикримча (изоҳ қолдираман)"],
-    ru: ["Согласен(на)", "Частично согласен(на)", "Не согласен(на)", "По моему мнению (оставлю комментарий)"],
-    en: ["I agree", "I partially agree", "I disagree", "In my opinion (I will leave a comment)"]
+    uz_cyrl: ["Қўшиламан", "Қисман қўшиламан", "Қўшилмайман", "Менинг фикрим қуйидагича:"],
+    ru: ["Согласен(на)", "Частично согласен(на)", "Не согласен(на)", "По моему мнению:"],
+    en: ["I agree", "I partially agree", "I disagree", "In my opinion:"]
   },
   open_option: true,
   index: true
@@ -305,17 +305,17 @@ const questions = [
     uz_cyrl: [
       "Ҳа, айниқса бизнинг авлод учун қийин",
       "Йўқ, смартфонларга ҳам ўрганиб кетдик",
-      "Менинг фикримча (изоҳ қолдираман)"
+      "Менинг фикрим қуйидагича:"
     ],
     ru: [
       "Да, особенно для нашего поколения",
       "Нет, мы ведь привыкли и к смартфонам",
-      "По моему мнению (оставлю комментарий)"
+      "По моему мнению:"
     ],
     en: [
       "Yes, especially for our generation",
       "No, we got used to smartphones as well",
-      "In my opinion (I will leave a comment)"
+      "In my opinion:"
     ]
   },
   open_option: true,
@@ -427,22 +427,22 @@ const questions = [
     uz: [
       "Ha, bunga qo‘shilaman",
       "Yo‘q, ko‘proq xodimlarga bog‘liq",
-      "Mening o‘ylashimcha (izoh qoldiraman)"
+      "Mening fikrim quyidagicha:"
     ],
     uz_cyrl: [
       "Ҳа, бунга қўшиламан",
       "Йўқ, кўпроқ ходимларга боғлиқ",
-      "Менинг фикримча (изоҳ қолдираман)"
+      "Менинг фикрим қуйидагича:"
     ],
     ru: [
       "Да, я согласен(на)",
       "Нет, это в большей степени зависит от сотрудников",
-      "По моему мнению (оставлю комментарий)"
+      "По моему мнению:"
     ],
     en: [
       "Yes, I agree",
       "No, it depends more on employees",
-      "In my opinion (I will leave a comment)"
+      "In my opinion:"
     ]
   },
   open_option: true,
