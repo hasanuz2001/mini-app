@@ -14,7 +14,11 @@ let t = null;
 
 const content = document.getElementById("content");
 const progressBar = document.getElementById("progress-bar");
-
+const DIMENSIONS = {
+  leadership: [5, 6, 7],
+  core: [8, 9, 10],
+  readiness: [11, 12]
+};
 
 function renderLanguageSelector() {
   content.innerHTML = `
@@ -50,16 +54,15 @@ function render() {
 
   // END OF SURVEY CHECK — MUST COME FIRST
   if (current >= questions.length) {
-    progressBar.style.width = "100%";
-    content.innerHTML = `
-      <div class="card">
-        <h3>${t.finish}</h3>
-        <p>${t.thank_you || ""}</p>
-      </div>
-    `;
-    console.log("Answers:", answers);
-    return;
-  }
+  saveResult();
+  content.innerHTML = `
+    <div class="card">
+      <h3>${t.finish}</h3>
+      <p>${t.thank_you}</p>
+    </div>
+  `;
+  return;
+}
 
   const q = questions[current];
   const safeLang = (q.text && q.text[lang]) ? lang : "uz";
@@ -168,3 +171,41 @@ function submitOpenAnswer() {
 
 
 render();
+function calculateScores() {
+  let scores = {
+    leadership: 0,
+    core: 0,
+    readiness: 0
+  };
+
+  Object.entries(DIMENSIONS).forEach(([dim, qIds]) => {
+    qIds.forEach(id => {
+      scores[dim] += scoreAnswer(id, answers[id]);
+    });
+  });
+
+  return scores;
+}
+function saveResult() {
+  const scores = calculateScores();
+
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+  let data = JSON.parse(localStorage.getItem("survey_results") || "{}");
+
+  if (!data[today]) {
+    data[today] = {
+      count: 0,
+      leadership: 0,
+      core: 0,
+      readiness: 0
+    };
+  }
+
+  data[today].count += 1;
+  data[today].leadership += scores.leadership;
+  data[today].core += scores.core;
+  data[today].readiness += scores.readiness;
+
+  localStorage.setItem("survey_results", JSON.stringify(data));
+}
