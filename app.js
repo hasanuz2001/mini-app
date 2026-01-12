@@ -78,9 +78,19 @@ function render() {
 
     if (q.open_option) {
       html += `
-        <div style="margin-top:10px;">
-          <textarea id="openAnswer" placeholder="Izohingizni yozing (ixtiyoriy)" rows="3" style="width:100%;"></textarea>
-          <button style="margin-top:8px;" onclick="submitOpenAnswer()">Davom etish</button>
+        <div style="margin-top:12px;">
+          <div style="color:#777;font-weight:bold;margin-bottom:6px;">
+            Менинг фикрим қуйидагича:
+          </div>
+          <textarea
+            id="openAnswer"
+            placeholder="Изоҳни шу ерга ёзинг"
+            rows="3"
+            style="width:100%;"
+          ></textarea>
+          <button style="margin-top:10px;" onclick="submitOpenAnswer()">
+            Изоҳни жўнатиш
+          </button>
         </div>
       `;
     }
