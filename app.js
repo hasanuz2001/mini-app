@@ -1,18 +1,18 @@
-/* Telegram Mini App initialization */
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-/* State */
 let current = 0;
 let answers = {};
+
 let lang = null;
+
 let t = null;
 
-/* DOM */
+
 const content = document.getElementById("content");
 const progressBar = document.getElementById("progress-bar");
 
-/* ---------- Language Selector ---------- */
+
 function renderLanguageSelector() {
   content.innerHTML = `
     <div class="card">
@@ -27,33 +27,26 @@ function renderLanguageSelector() {
   `;
 }
 
-/* ---------- Set Language ---------- */
 function setLanguage(selectedLang) {
-  if (!window.translations || !translations[selectedLang]) {
-    content.innerHTML = "<p>Xatolik: til maʼlumotlari yuklanmadi.</p>";
+  lang = selectedLang;
+
+  if (!translations || !translations[lang]) {
+    alert("Language data not loaded");
     return;
   }
 
-  lang = selectedLang;
   t = translations[lang];
-  document.documentElement.lang = lang;
-
-  current = 0;
-  answers = {};
-
-  renderQuestion();
+  render();
 }
 
-/* ---------- Render Question ---------- */
-function renderQuestion() {
-  if (!lang) {
+function render() {
+    if (!lang) {
     renderLanguageSelector();
     return;
   }
-
   const q = questions[current];
-
-  progressBar.style.width = `${(current / questions.length) * 100}%`;
+  const safeLang = (q.text && q.text[lang]) ? lang : "uz";
+  progressBar.style.width = ((current / questions.length) * 100) + "%";
 
   if (!q) {
     content.innerHTML = `
@@ -62,15 +55,15 @@ function renderQuestion() {
         <p>${t.thank_you || ""}</p>
       </div>
     `;
-    console.log("Survey answers:", answers);
+    console.log("Answers:", answers);
     return;
   }
 
-  let html = `<div class="card"><p>${q.text[lang]}</p>`;
+  let html = `<div class="card"><p>${q.text[safeLang]}</p>`;
 
   if (q.type === "demographic") {
-    q.options[lang].forEach(opt => {
-      html += `<button onclick="answer('${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
+    q.options[safeLang].forEach(opt => {
+      html += `<button onclick="answer('${opt}')">${opt}</button>`;
     });
   }
 
@@ -81,37 +74,16 @@ function renderQuestion() {
     }
     html += `</div>`;
   }
-  if (q.type === "single_choice") {
-  q.options[lang].forEach(opt => {
-    html += `<button onclick="answer('${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
-  });
 
-  if (q.open_option) {
-    html += `
-      <textarea id="openAnswer" placeholder="Izohingiz (ixtiyoriy)"></textarea>
-      <button onclick="submitOpenAnswer()">Davom etish</button>
-    `;
-  }
-}
   html += `</div>`;
   content.innerHTML = html;
 }
 
-/* ---------- Answer Handler ---------- */
 function answer(value) {
   answers[questions[current].id] = value;
   current++;
-  renderQuestion();
+  render();
 }
 
-/* ---------- Start ---------- */
-renderLanguageSelector();
-function submitOpenAnswer() {
-  const text = document.getElementById("openAnswer")?.value || "";
-  answers[questions[current].id] = {
-    choice: answers[questions[current].id],
-    comment: text
-  };
-  current++;
-  renderQuestion();
-}
+
+render();
