@@ -72,6 +72,15 @@ function render() {
 
   if (q.type === "single_choice") {
     q.options[safeLang].forEach(opt => {
+      // Skip "open comment" pseudo-option
+      if (
+        opt.toLowerCase().includes("mening") ||
+        opt.toLowerCase().includes("по моему") ||
+        opt.toLowerCase().includes("in my opinion")
+      ) {
+        return;
+      }
+
       const safeOpt = opt.replace(/'/g, "\\'");
       html += `<button onclick="answer('${safeOpt}')">${opt}</button>`;
     });
@@ -80,16 +89,31 @@ function render() {
       html += `
         <div style="margin-top:12px;">
           <div style="color:#777;font-weight:bold;margin-bottom:6px;">
-            Менинг фикрим қуйидагича:
+            ${
+              lang === "uz" ? "Mening fikrim quyidagicha:" :
+              lang === "uz_cyrl" ? "Менинг фикрим қуйидагича:" :
+              lang === "ru" ? "Моё мнение следующее:" :
+              "My opinion is as follows:"
+            }
           </div>
           <textarea
             id="openAnswer"
-            placeholder="Изоҳни шу ерга ёзинг"
+            placeholder="${
+              lang === "uz" ? "Izohni shu yerga yozing (ixtiyoriy)" :
+              lang === "uz_cyrl" ? "Изоҳни шу ерга ёзинг (ихтиёрий)" :
+              lang === "ru" ? "Напишите комментарий здесь (необязательно)" :
+              "Write your comment here (optional)"
+            }"
             rows="3"
             style="width:100%;"
           ></textarea>
           <button style="margin-top:10px;" onclick="submitOpenAnswer()">
-            Изоҳни жўнатиш
+            ${
+              lang === "uz" ? "Izohni jo'natish" :
+              lang === "uz_cyrl" ? "Изоҳни жўнатиш" :
+              lang === "ru" ? "Отправить комментарий" :
+              "Submit comment"
+            }
           </button>
         </div>
       `;

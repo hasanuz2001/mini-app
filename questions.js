@@ -37,26 +37,26 @@ const questions = [
     uz: [
       "Ha, albatta oshiradi",
       "Menimcha yo‘q",
-      "Bilmadim, lekin sinab ko‘rish kerak" //,
-      //"Mening fikrim quyidagicha:"
+      "Bilmadim, lekin sinab ko‘rish kerak",
+      "Mening fikrim quyidagicha"
     ],
     uz_cyrl: [
       "Ҳа, албатта оширади",
       "Менимча йўқ",
-      "Билмадим, лекин синаб кўриш керак"//,
-      //"Менинг фикрим қуйидагича:"
+      "Билмадим, лекин синаб кўриш керак",
+      "Менинг фикрим қуйидагича:"
     ],
     ru: [
       "Да, безусловно повышает",
       "Скорее нет",
-      "Не уверен(а), но стоит попробовать"//,
-      //"По моему мнению:"
+      "Не уверен(а), но стоит попробовать",
+      "По моему мнению:"
     ],
     en: [
       "Yes, it definitely improves efficiency",
       "I don’t think so",
-      "I’m not sure, but it’s worth trying"//,
-     // "In my opinion:"
+      "I’m not sure, but it’s worth trying",
+      "In my opinion:"
     ]
   },
   open_option: true,
@@ -119,7 +119,7 @@ const questions = [
       "Rahbariyat aniq tushuntirib berdi",
       "Tushuntirdi, lekin yana ko‘proq tushuntirishi kerak",
       "Bu haqida xabarim yo‘q, lekin bu juda muhim",
-      "Mening o‘ylashimcha (izoh qoldiraman)"
+      "Mening fikrim quyidagicha:"
     ],
     uz_cyrl: [
       "Раҳбарият аниқ тушунтириб берди",
@@ -159,7 +159,7 @@ const questions = [
       "Ha, bunga qo‘shilaman",
       "Qisman qo‘shilaman",
       "Masalaning ikkinchi tomoni ham bor, yaxshilab o‘ylash kerak",
-      "Mening o‘ylashimcha (izoh qoldiraman)"
+      "Mening fikrim quyidagicha:"
     ],
     uz_cyrl: [
       "Ҳа, бунга қўшиламан",
@@ -199,7 +199,7 @@ const questions = [
       "Albatta olinadi, doim shunday bo‘lgan",
       "Bunday bo‘ladi deb o‘ylamayman",
       "Bu jarayonda mening fikrim muhim emas deb hisoblayman",
-      "Mening o‘ylashimcha (izoh qoldiraman)"
+      "Mening fikrim quyidagicha:"
     ],
     uz_cyrl: [
       "Албатта олинади, доим шундай бўлган",
@@ -241,7 +241,7 @@ const questions = [
       "Ha, ish o‘rnimni yo‘qotishim mumkin deb o‘ylayman",
       "Sun’iy intellekt bilan birga ishlayman, yangi vazifalar yuklanadi",
       "Sun’iy intellekt baribir meni to‘liq almashtira olmaydi",
-      "Mening o‘ylashimcha (izoh qoldiraman)"
+       "Mening fikrim quyidagicha:"
     ],
     uz_cyrl: [
       "Ҳа, иш ўрнимни йўқотишим мумкин деб ўйлайман",
@@ -300,7 +300,7 @@ const questions = [
     uz: [
       "Ha, ayniqsa bizning avlod uchun qiyin",
       "Yo‘q, smartfonlarga ham o‘rganib ketdik",
-      "Mening o‘ylashimcha (izoh qoldiraman)"
+      "Mening fikrim quyidagicha:"
     ],
     uz_cyrl: [
       "Ҳа, айниқса бизнинг авлод учун қийин",
