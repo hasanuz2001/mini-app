@@ -49,6 +49,18 @@ function renderQuestion() {
   if (!lang) {
     renderLanguageSelector();
     return;
+    if (q.type === "single_choice") {
+  q.options[lang].forEach(opt => {
+    html += `<button onclick="answer('${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
+  });
+
+  if (q.open_option) {
+    html += `
+      <textarea id="openAnswer" placeholder="Izohingiz (ixtiyoriy)"></textarea>
+      <button onclick="submitOpenAnswer()">Davom etish</button>
+    `;
+  }
+}
   }
 
   const q = questions[current];
