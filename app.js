@@ -43,15 +43,14 @@ function setLanguage(selectedLang) {
 }
 
 function render() {
-    if (!lang) {
+  if (!lang) {
     renderLanguageSelector();
     return;
   }
-  const q = questions[current];
-  const safeLang = (q.text && q.text[lang]) ? lang : "uz";
-  progressBar.style.width = ((current / questions.length) * 100) + "%";
 
-  if (!q) {
+  // END OF SURVEY CHECK — MUST COME FIRST
+  if (current >= questions.length) {
+    progressBar.style.width = "100%";
     content.innerHTML = `
       <div class="card">
         <h3>${t.finish}</h3>
@@ -61,6 +60,10 @@ function render() {
     console.log("Answers:", answers);
     return;
   }
+
+  const q = questions[current];
+  const safeLang = (q.text && q.text[lang]) ? lang : "uz";
+  progressBar.style.width = ((current / questions.length) * 100) + "%";
 
   let html = `<div class="card"><p>${q.text[safeLang]}</p>`;
 
@@ -88,7 +91,19 @@ function render() {
     if (q.open_option) {
       html += `
         <div style="margin-top:12px;">
-          <div style="color:#777;font-weight:bold;margin-bottom:6px;">
+          <div
+            style="
+              display:inline-block;
+              padding:8px 12px;
+              background:#2e7d32;
+              color:#fff;
+              font-weight:600;
+              border-radius:6px;
+              margin-bottom:8px;
+              cursor:default;
+              user-select:none;
+            "
+          >
             ${
               lang === "uz" ? "Mening fikrim quyidagicha:" :
               lang === "uz_cyrl" ? "Менинг фикрим қуйидагича:" :
