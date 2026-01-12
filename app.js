@@ -1,5 +1,8 @@
-const tg = window.Telegram.WebApp;
-tg.expand();
+let tg = null;
+if (window.Telegram && window.Telegram.WebApp) {
+  tg = window.Telegram.WebApp;
+  tg.expand();
+}
 
 let current = 0;
 let answers = {};
@@ -64,6 +67,13 @@ function render() {
   if (q.type === "demographic") {
     q.options[safeLang].forEach(opt => {
       html += `<button onclick="answer('${opt}')">${opt}</button>`;
+    });
+  }
+
+  if (q.type === "single_choice") {
+    q.options[safeLang].forEach(opt => {
+      const safeOpt = opt.replace(/'/g, "\\'");
+      html += `<button onclick="answer('${safeOpt}')">${opt}</button>`;
     });
   }
 
