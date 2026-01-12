@@ -49,18 +49,6 @@ function renderQuestion() {
   if (!lang) {
     renderLanguageSelector();
     return;
-    if (q.type === "single_choice") {
-  q.options[lang].forEach(opt => {
-    html += `<button onclick="answer('${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
-  });
-
-  if (q.open_option) {
-    html += `
-      <textarea id="openAnswer" placeholder="Izohingiz (ixtiyoriy)"></textarea>
-      <button onclick="submitOpenAnswer()">Davom etish</button>
-    `;
-  }
-}
   }
 
   const q = questions[current];
@@ -93,7 +81,18 @@ function renderQuestion() {
     }
     html += `</div>`;
   }
+  if (q.type === "single_choice") {
+  q.options[lang].forEach(opt => {
+    html += `<button onclick="answer('${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
+  });
 
+  if (q.open_option) {
+    html += `
+      <textarea id="openAnswer" placeholder="Izohingiz (ixtiyoriy)"></textarea>
+      <button onclick="submitOpenAnswer()">Davom etish</button>
+    `;
+  }
+}
   html += `</div>`;
   content.innerHTML = html;
 }
@@ -107,3 +106,12 @@ function answer(value) {
 
 /* ---------- Start ---------- */
 renderLanguageSelector();
+function submitOpenAnswer() {
+  const text = document.getElementById("openAnswer")?.value || "";
+  answers[questions[current].id] = {
+    choice: answers[questions[current].id],
+    comment: text
+  };
+  current++;
+  renderQuestion();
+}
