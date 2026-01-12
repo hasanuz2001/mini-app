@@ -77,9 +77,10 @@ function render() {
     q.options[safeLang].forEach(opt => {
       // Skip "open comment" pseudo-option
       if (
-        opt.toLowerCase().includes("mening") ||
-        opt.toLowerCase().includes("по моему") ||
-        opt.toLowerCase().includes("in my opinion")
+        opt.toLowerCase().includes("Mening fikrim quyidagicha:") ||
+        opt.toLowerCase().includes("Менинг фикрим қуйидагича:") ||
+        opt.toLowerCase().includes("По моему мнению:") ||
+        opt.toLowerCase().includes("In my opinion:")
       ) {
         return;
       }
