@@ -8,11 +8,13 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Umumiy ish tajribangiz?",
+    uz_cyrl: "Умумий иш тажрибангиз?",
     ru: "Каков ваш общий трудовой стаж?",
     en: "What is your total work experience?"
   },
   options: {
     uz: ["0–5 yil", "6–10 yil", "11–20 yil", "20 yildan ortiq"],
+    uz_cyrl: ["0–5 йил", "6–10 йил", "11–20 йил", "20 йилдан ортиқ"],
     ru: ["0–5 лет", "6–10 лет", "11–20 лет", "Более 20 лет"],
     en: ["0–5 years", "6–10 years", "11–20 years", "More than 20 years"]
   },
@@ -27,6 +29,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Sun’iy intellekt texnik xizmat samaradorligini oshiradi deb o‘ylaysizmi?",
+    uz_cyrl: "Сунъий интеллект техник хизмат самарадорлигини оширади деб ўйлайсизми?",
     ru: "Считаете ли вы, что искусственный интеллект повышает эффективность технического обслуживания?",
     en: "Do you think artificial intelligence improves the efficiency of technical maintenance?"
   },
@@ -36,6 +39,12 @@ const questions = [
       "Menimcha yo‘q",
       "Bilmadim, lekin sinab ko‘rish kerak",
       "Mening o‘ylashimcha (izoh qoldiraman)"
+    ],
+    uz_cyrl: [
+      "Ҳа, албатта оширади",
+      "Менимча йўқ",
+      "Билмадим, лекин синаб кўриш керак",
+      "Менинг фикримча (изоҳ қолдираман)"
     ],
     ru: [
       "Да, безусловно повышает",
@@ -60,6 +69,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Sun’iy intellekt qarorlariga qanchalik ishonasiz?",
+    uz_cyrl: "Сунъий интеллект қарорларига қанчалик ишонасиз?",
     ru: "Насколько вы доверяете решениям, принимаемым искусственным интеллектом?",
     en: "How much do you trust decisions made by artificial intelligence?"
   },
@@ -69,6 +79,12 @@ const questions = [
       "80% AI, 20% inson qayta ko‘rib chiqishi kerak",
       "50% AI, 50% inson qarori bo‘lishi kerak",
       "Men juda kam ishonaman, chunki bu uran!"
+    ],
+    uz_cyrl: [
+      "Мен 100% ишонаман",
+      "80% AI, 20% инсон қайта кўриб чиқиши керак",
+      "50% AI, 50% инсон қарори бўлиши керак",
+      "Мен жуда кам ишонаман, чунки бу уран!"
     ],
     ru: [
       "Я доверяю решениям ИИ на 100%",
@@ -94,6 +110,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Rahbariyat Sun’iy intellektni joriy etish maqsadini aniq tushuntirdimi?",
+    uz_cyrl: "Раҳбарият Сунъий интеллектни жорий этиш мақсадини аниқ тушунтирдими?",
     ru: "Чётко ли руководство объяснило цели внедрения искусственного интеллекта?",
     en: "Did management clearly explain the objectives of implementing artificial intelligence?"
   },
@@ -103,6 +120,12 @@ const questions = [
       "Tushuntirdi, lekin yana ko‘proq tushuntirishi kerak",
       "Bu haqida xabarim yo‘q, lekin bu juda muhim",
       "Mening o‘ylashimcha (izoh qoldiraman)"
+    ],
+    uz_cyrl: [
+      "Раҳбарият аниқ тушунтириб берди",
+      "Тушунтирди, лекин яна кўпроқ тушунтириши керак",
+      "Бу ҳақда хабарим йўқ, лекин бу жуда муҳим",
+      "Менинг фикримча (изоҳ қолдираман)"
     ],
     ru: [
       "Да, руководство чётко всё объяснило",
@@ -127,6 +150,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Rahbarlar Sun’iy intellekt orqali xarajatlar kamayishini tushuntirdimi?",
+    uz_cyrl: "Раҳбарлар Сунъий интеллект орқали харажатлар камайишини тушунтирдими?",
     ru: "Объяснило ли руководство, как ИИ поможет сократить затраты?",
     en: "Did management explain how artificial intelligence would reduce costs?"
   },
@@ -136,6 +160,12 @@ const questions = [
       "Qisman qo‘shilaman",
       "Masalaning ikkinchi tomoni ham bor, yaxshilab o‘ylash kerak",
       "Mening o‘ylashimcha (izoh qoldiraman)"
+    ],
+    uz_cyrl: [
+      "Ҳа, бунга қўшиламан",
+      "Қисман қўшиламан",
+      "Масаланинг иккинчи томони ҳам бор, яхшилаб ўйлаш керак",
+      "Менинг фикримча (изоҳ қолдираман)"
     ],
     ru: [
       "Да, я с этим согласен(на)",
@@ -160,6 +190,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Sun’iy intellekt joriy etishda mutaxassislar fikri inobatga olinadi deb o‘ylaysizmi?",
+    uz_cyrl: "Сунъий интеллект жорий этишда мутахассислар фикри инобатга олинади деб ўйлайсизми?",
     ru: "Считаете ли вы, что мнение специалистов учитывается при внедрении ИИ?",
     en: "Do you think experts’ opinions are taken into account when implementing AI?"
   },
@@ -169,6 +200,12 @@ const questions = [
       "Bunday bo‘ladi deb o‘ylamayman",
       "Bu jarayonda mening fikrim muhim emas deb hisoblayman",
       "Mening o‘ylashimcha (izoh qoldiraman)"
+    ],
+    uz_cyrl: [
+      "Албатта олинади, доим шундай бўлган",
+      "Бундай бўлади деб ўйламайман",
+      "Бу жараёнда менинг фикрим муҳим эмас деб ҳисоблайман",
+      "Менинг фикримча (изоҳ қолдираман)"
     ],
     ru: [
       "Да, мнение специалистов всегда учитывается",
@@ -195,6 +232,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Sun’iy intellekt ish o‘rnimga xavf soladi deb o‘ylaysizmi?",
+    uz_cyrl: "Сунъий интеллект иш ўрнимга хавф солади деб ўйлайсизми?",
     ru: "Считаете ли вы, что искусственный интеллект угрожает вашему рабочему месту?",
     en: "Do you think artificial intelligence threatens your job?"
   },
@@ -204,6 +242,12 @@ const questions = [
       "Sun’iy intellekt bilan birga ishlayman, yangi vazifalar yuklanadi",
       "Sun’iy intellekt baribir meni to‘liq almashtira olmaydi",
       "Mening o‘ylashimcha (izoh qoldiraman)"
+    ],
+    uz_cyrl: [
+      "Ҳа, иш ўрнимни йўқотишим мумкин деб ўйлайман",
+      "Сунъий интеллект билан бирга ишлайман, янги вазифалар юкланади",
+      "Сунъий интеллект барибир мени тўлиқ алмаштира олмайди",
+      "Менинг фикримча (изоҳ қолдираман)"
     ],
     ru: [
       "Да, я считаю, что могу потерять работу",
@@ -228,11 +272,13 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Sun’iy intellekt xato qilsa, javobgarlik noaniq deb hisoblaysizmi?",
+    uz_cyrl: "Сунъий интеллект хато қилса, жавобгарлик ноаниқ деб ҳисоблайсизми?",
     ru: "Считаете ли вы, что в случае ошибки ИИ ответственность будет неясной?",
     en: "Do you think accountability is unclear if artificial intelligence makes a mistake?"
   },
   options: {
     uz: ["Qo‘shilaman", "Qisman qo‘shilaman", "Qo‘shilmayman", "Mening o‘ylashimcha (izoh qoldiraman)"],
+    uz_cyrl: ["Қўшиламан", "Қисман қўшиламан", "Қўшилмайман", "Менинг фикримча (изоҳ қолдираман)"],
     ru: ["Согласен(на)", "Частично согласен(на)", "Не согласен(на)", "По моему мнению (оставлю комментарий)"],
     en: ["I agree", "I partially agree", "I disagree", "In my opinion (I will leave a comment)"]
   },
@@ -246,6 +292,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Sun’iy intellektga ishonish psixologik jihatdan qiyin deb hisoblaysizmi?",
+    uz_cyrl: "Сунъий интеллектга ишониш психологик жиҳатдан қийин деб ҳисоблайсизми?",
     ru: "Считаете ли вы, что психологически сложно доверять искусственному интеллекту?",
     en: "Do you find it psychologically difficult to trust artificial intelligence?"
   },
@@ -254,6 +301,11 @@ const questions = [
       "Ha, ayniqsa bizning avlod uchun qiyin",
       "Yo‘q, smartfonlarga ham o‘rganib ketdik",
       "Mening o‘ylashimcha (izoh qoldiraman)"
+    ],
+    uz_cyrl: [
+      "Ҳа, айниқса бизнинг авлод учун қийин",
+      "Йўқ, смартфонларга ҳам ўрганиб кетдик",
+      "Менинг фикримча (изоҳ қолдираман)"
     ],
     ru: [
       "Да, особенно для нашего поколения",
@@ -278,6 +330,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Sun’iy intellektdan foydalanish bo‘yicha yetarli trening berildimi?",
+    uz_cyrl: "Сунъий интеллектдан фойдаланиш бўйича етарли тренинг берилдими?",
     ru: "Было ли предоставлено достаточное обучение по использованию ИИ?",
     en: "Was sufficient training provided on how to use artificial intelligence?"
   },
@@ -286,6 +339,11 @@ const questions = [
       "Mening bilimlarim yetarli, trening shart emas",
       "Bu trening yetarli emas, yana trening kerak",
       "Trening tashkil etilganini eshitmadim"
+    ],
+    uz_cyrl: [
+      "Менинг билимларим етарли, тренинг шарт эмас",
+      "Бу тренинг етарли эмас, яна тренинг керак",
+      "Тренинг ташкил этилганини эшитмадим"
     ],
     ru: [
       "Моих знаний достаточно, обучение не требуется",
@@ -307,6 +365,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Rahbarlar raqamli texnologiyalarni tushunadi deb o‘ylaysizmi?",
+    uz_cyrl: "Раҳбарлар рақамли технологияларни тушунади деб ўйлайсизми?",
     ru: "Считаете ли вы, что руководство понимает цифровые технологии?",
     en: "Do you think management understands digital technologies?"
   },
@@ -315,6 +374,11 @@ const questions = [
       "Rahbarlarning aksariyati tushunmaydi",
       "Rahbarlar bu sohada juda yaxshi",
       "Ayrimlari yaxshi, qolganlarini o‘qitish kerak"
+    ],
+    uz_cyrl: [
+      "Раҳбарларнинг аксарияти тушунмайди",
+      "Раҳбарлар бу соҳада жуда яхши",
+      "Айримлари яхши, қолганларини ўқитиш керак"
     ],
     ru: [
       "Большинство руководителей не понимают эти технологии",
@@ -336,11 +400,13 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Oldingi innovatsiyalar korxonada muvaffaqiyatli bo‘lgan deb hisoblaysizmi?",
+    uz_cyrl: "Олдинги инновациялар корхонада муваффақиятли бўлган деб ҳисоблайсизми?",
     ru: "Считаете ли вы, что предыдущие инновации в компании были успешными?",
     en: "Do you think previous innovations in the company were successful?"
   },
   options: {
     uz: ["Ha, bunga qo‘shilaman", "Yo‘q, qo‘shilmayadman", "Bizda deyarli innovatsiyalar bo‘lmagan"],
+    uz_cyrl: ["Ҳа, бунга қўшиламан", "Йўқ, қўшилмайман", "Бизда деярли инновациялар бўлмаган"],
     ru: ["Да, я согласен(на)", "Нет, не согласен(на)", "В компании практически не было инноваций"],
     en: ["Yes, I agree", "No, I disagree", "There have been almost no innovations in the company"]
   },
@@ -353,6 +419,7 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Sun’iy intellektni muvaffaqiyatli joriy etish asosan rahbariyatga bog‘liq deb o‘ylaysizmi?",
+    uz_cyrl: "Сунъий интеллектни муваффақиятли жорий этиш асосан раҳбариятга боғлиқ деб ўйлайсизми?",
     ru: "Считаете ли вы, что успешное внедрение ИИ в основном зависит от руководства?",
     en: "Do you think successful implementation of artificial intelligence mainly depends on management?"
   },
@@ -361,6 +428,11 @@ const questions = [
       "Ha, bunga qo‘shilaman",
       "Yo‘q, ko‘proq xodimlarga bog‘liq",
       "Mening o‘ylashimcha (izoh qoldiraman)"
+    ],
+    uz_cyrl: [
+      "Ҳа, бунга қўшиламан",
+      "Йўқ, кўпроқ ходимларга боғлиқ",
+      "Менинг фикримча (изоҳ қолдираман)"
     ],
     ru: [
       "Да, я согласен(на)",
