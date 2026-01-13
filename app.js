@@ -158,6 +158,7 @@ function answer(value) {
 }
 
 function submitOpenAnswer() {
+  console.log('submitOpenAnswer called, current:', current);
   const text = document.getElementById("openAnswer")?.value || "";
   const qId = questions[current].id;
 
@@ -170,7 +171,9 @@ function submitOpenAnswer() {
     comment: text
   };
 
+  console.log('answers updated, incrementing current');
   current++;
+  console.log('current after increment:', current);
   render();
 }
 
