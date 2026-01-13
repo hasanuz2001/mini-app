@@ -1,5 +1,26 @@
 const questions = [
 
+/* ===== BLOK 0: ISM-FAMILYA ===== */
+
+{
+  id: 1,
+  block: "demographic",
+  type: "open_text",
+  text: {
+    uz: "Ism sharifingizni yozing (Ixtiyoriy)",
+    uz_cyrl: "Исм шарифингизни ёзинг (Ихтиёрий)",
+    ru: "Напишите ваше имя и фамилию (необязательно)",
+    en: "Write your name and surname (optional)"
+  },
+  options: {
+    uz: ["O'tkazib yuboraman"],
+    uz_cyrl: ["Ўтказиб юборамам"],
+    ru: ["Пропустить"],
+    en: ["Skip"]
+  },
+  index: false
+},
+
 /* ===== BLOK I: PROFIL ===== */
 
 {

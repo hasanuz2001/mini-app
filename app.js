@@ -79,6 +79,40 @@ function render() {
     });
   }
 
+  if (q.type === "open_text") {
+    html += `
+      <div style="margin-top:12px;">
+        <textarea
+          id="openAnswer"
+          placeholder="${
+            lang === "uz" ? "Ism sharifingizni shu yerga yozing..." :
+            lang === "uz_cyrl" ? "Исм шарифингизни шу ерга ёзинг..." :
+            lang === "ru" ? "Напишите здесь ваше имя и фамилию..." :
+            "Write your name and surname here..."
+          }"
+          rows="2"
+          style="width:100%;"
+        ></textarea>
+        <button style="margin-top:10px;" onclick="submitOpenText()">
+          ${
+            lang === "uz" ? "Davom etish" :
+            lang === "uz_cyrl" ? "Давом этиш" :
+            lang === "ru" ? "Продолжить" :
+            "Continue"
+          }
+        </button>
+        <button style="margin-top:8px; background:#999;" onclick="skipOpenText()">
+          ${
+            lang === "uz" ? "O'tkazib yuboraman" :
+            lang === "uz_cyrl" ? "Ўтказиб юборамам" :
+            lang === "ru" ? "Пропустить" :
+            "Skip"
+          }
+        </button>
+      </div>
+    `;
+  }
+
   if (q.type === "single_choice") {
     q.options[safeLang].forEach((opt, index) => {
       // If this question has open_option, the LAST option is a pseudo-option for comments
@@ -174,6 +208,26 @@ function submitOpenAnswer() {
   console.log('answers updated, incrementing current');
   current++;
   console.log('current after increment:', current);
+  render();
+}
+
+function submitOpenText() {
+  console.log('submitOpenText called, current:', current);
+  const text = document.getElementById("openAnswer")?.value || "";
+  const qId = questions[current].id;
+  answers[qId] = text;
+  
+  console.log('opentext answer saved:', text);
+  current++;
+  render();
+}
+
+function skipOpenText() {
+  console.log('skipOpenText called, current:', current);
+  const qId = questions[current].id;
+  answers[qId] = ""; // Bo'sh qatorni saqlash
+  
+  current++;
   render();
 }
 
