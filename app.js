@@ -179,6 +179,13 @@ function submitOpenAnswer() {
 
 
 render();
+
+function scoreAnswer(questionId, answer) {
+  // TODO: Implement scoring logic
+  // For now, return 0
+  return 0;
+}
+
 function calculateScores() {
   let scores = {
     leadership: 0,
