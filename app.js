@@ -65,10 +65,10 @@ function render() {
   let finishMessage = t.thank_you;
   if (userName && userName.trim()) {
     finishMessage = `${userName} ${
-      lang === "uz" ? "Sizga katta rahmat! Ilm va izlanishimizga katta hissa qo'shdingiz" :
-      lang === "uz_cyrl" ? "Сизга катта раҳмат! Илм ва изланишимизга катта ҳисса қўшдингиз" :
-      lang === "ru" ? "Большое спасибо! Вы внесли большой вклад в нашу науку и исследования" :
-      "Thank you so much! You have made a great contribution to our science and research"
+      lang === "uz" ? "! Sizga katta rahmat! Ilm va izlanishimizga katta hissa qo'shdingiz!" :
+      lang === "uz_cyrl" ? "! Сизга катта раҳмат! Илм ва изланишимизга катта ҳисса қўшдингиз!" :
+      lang === "ru" ? "! Большое спасибо! Вы внесли большой вклад в нашу науку и исследования!" :
+      "! Thank you so much! You have made a great contribution to our science and research!"
     }`;
   }
   
