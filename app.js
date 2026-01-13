@@ -52,8 +52,11 @@ function render() {
     return;
   }
 
+  console.log('render() called, current:', current, 'questions.length:', questions.length);
+  
   // END OF SURVEY CHECK — MUST COME FIRST
   if (current >= questions.length) {
+  console.log('Survey finished!');
   saveResult();
   content.innerHTML = `
     <div class="card">
@@ -147,8 +150,10 @@ function render() {
 }
 
 function answer(value) {
+  console.log('answer called with:', value, 'current:', current, 'questions.length:', questions.length);
   answers[questions[current].id] = value;
   current++;
+  console.log('after increment, current:', current);
   render();
 }
 
