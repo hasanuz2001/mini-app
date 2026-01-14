@@ -1,9 +1,10 @@
 // Config fayl namunasi
 // Bu faylni config.js nomiga ko'chiring va qiymatlarni to'ldiring
+// Yoki GitHub'da to'g'ridan-to'g'ri config.js yarating va token qo'shing
 
 const CONFIG = {
-    GITHUB_TOKEN: 'your-github-token-here', // GitHub Personal Access Token
-    GIST_ID: 'your-gist-id-here', // GitHub Gist ID (create_gist.py orqali oling)
+    GITHUB_TOKEN: 'your-github-token-here', // GitHub Personal Access Token - Bu yerga token'ni qo'ying
+    GIST_ID: 'd88f1ebc50c5d37c857ee5961d6dba5c', // GitHub Gist ID
     
     // Backend API URL
     // Development: http://localhost:8000
