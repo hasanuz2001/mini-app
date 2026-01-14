@@ -278,7 +278,29 @@ render();
 // Backend'ga javob yuborish
 async function submitToBackend(userId, answers) {
   try {
-    console.log('Backend\'ga javob yuborilmoqda...', { userId, answers });
+    console.log('Backend\'ga javob yuborilmoqda...', { 
+      userId, 
+      answers,
+      API_BASE: API_BASE,
+      url: `${API_BASE}/submit`
+    });
+    
+    // Backend URL tekshirish
+    if (API_BASE === "https://your-backend-url.com") {
+      console.error('⚠️ Backend URL sozlanmagan! config.js faylida API_BASE ni o\'zgartiring.');
+      const statusEl = document.getElementById('saving-status');
+      if (statusEl) {
+        statusEl.innerHTML = lang === "uz"
+          ? "❌ Backend URL sozlanmagan! Iltimos, config.js faylida API_BASE ni o'zgartiring."
+          : lang === "uz_cyrl"
+          ? "❌ Бэкенд URL сўзланмаган! Илтимос, config.js файлида API_BASE ни ўзгартиринг."
+          : lang === "ru"
+          ? "❌ URL бэкенда не настроен! Пожалуйста, измените API_BASE в файле config.js."
+          : "❌ Backend URL not configured! Please update API_BASE in config.js file.";
+        statusEl.style.color = "#d32f2f";
+      }
+      return false;
+    }
     
     const response = await fetch(`${API_BASE}/submit`, {
       method: 'POST',
@@ -317,13 +339,13 @@ async function submitToBackend(userId, answers) {
       const statusEl = document.getElementById('saving-status');
       if (statusEl) {
         statusEl.innerHTML = lang === "uz"
-          ? "⚠️ Backend xatosi, lekin javoblar lokal saqlandi"
+          ? "❌ Backend xatosi! Javoblar saqlanmadi. Iltimos, qayta urinib ko'ring."
           : lang === "uz_cyrl"
-          ? "⚠️ Бэкенд хатоси, лекин жавоблар локал сақланди"
+          ? "❌ Бэкенд хатоси! Жавоблар сақланмади. Илтимос, қайта уриниб кўринг."
           : lang === "ru"
-          ? "⚠️ Ошибка бэкенда, но ответы сохранены локально"
-          : "⚠️ Backend error, but responses saved locally";
-        statusEl.style.color = "#ff9800";
+          ? "❌ Ошибка бэкенда! Ответы не сохранены. Пожалуйста, попробуйте снова."
+          : "❌ Backend error! Responses not saved. Please try again.";
+        statusEl.style.color = "#d32f2f";
       }
       
       return false;
@@ -335,13 +357,13 @@ async function submitToBackend(userId, answers) {
     const statusEl = document.getElementById('saving-status');
     if (statusEl) {
       statusEl.innerHTML = lang === "uz"
-        ? "⚠️ Internet muammosi, lekin javoblar lokal saqlandi"
+        ? "❌ Internet muammosi! Backend'ga ulanib bo'lmadi. Iltimos, internet aloqasini tekshiring va qayta urinib ko'ring."
         : lang === "uz_cyrl"
-        ? "⚠️ Интернет муаммоси, лекин жавоблар локал сақланди"
+        ? "❌ Интернет муаммоси! Бэкенд'га уланиб бўлмади. Илтимос, интернет алоқасини текширинг ва қайта уриниб кўринг."
         : lang === "ru"
-        ? "⚠️ Проблема с интернетом, но ответы сохранены локально"
-        : "⚠️ Internet issue, but responses saved locally";
-      statusEl.style.color = "#ff9800";
+        ? "❌ Проблема с интернетом! Не удалось подключиться к бэкенду. Пожалуйста, проверьте интернет-соединение и попробуйте снова."
+        : "❌ Internet issue! Could not connect to backend. Please check your internet connection and try again.";
+      statusEl.style.color = "#d32f2f";
     }
     
     return false;
