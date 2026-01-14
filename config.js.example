@@ -12,4 +12,7 @@ const CONFIG = {
     API_BASE: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? "http://localhost:8000"
       : "https://your-backend-url.com" // Production backend URL'ni qo'ying
+      // ⚠️ NOTO'G'RI: https://github.com/... (repository URL emas!)
+      // ⚠️ NOTO'G'RI: https://username.github.io/... (Pages URL emas!)
+      // ✅ TO'G'RI: https://your-app.railway.app (Backend API URL)
 };

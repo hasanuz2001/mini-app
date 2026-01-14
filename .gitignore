@@ -40,8 +40,4 @@ package-lock.json
 logs/
 
 # Config files
-<<<<<<< HEAD
 config.js
-=======
-config.js
->>>>>>> d916f34 (Update: Config.js .gitignore'ga qo'shildi)
