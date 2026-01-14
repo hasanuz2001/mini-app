@@ -281,12 +281,20 @@ async function getGistData() {
     throw new Error('GITHUB_TOKEN yoki GIST_ID sozlanmagan');
   }
   
+  // Token'ni tozalash
+  const cleanToken = token.trim();
+  
   const url = `https://api.github.com/gists/${gistId}`;
-  console.log('Gist\'dan o\'qish:', { url, gistId, tokenPrefix: token ? token.substring(0, 10) + '...' : 'null' });
+  console.log('Gist\'dan o\'qish:', { 
+    url, 
+    gistId, 
+    tokenPrefix: cleanToken ? cleanToken.substring(0, 10) + '...' : 'null',
+    tokenLength: cleanToken.length
+  });
   
   const response = await fetch(url, {
     headers: {
-      'Authorization': `token ${token}`,
+      'Authorization': `token ${cleanToken}`,
       'Accept': 'application/vnd.github.v3+json'
     }
   });
@@ -318,6 +326,9 @@ async function saveGistData(data) {
     throw new Error('GITHUB_TOKEN yoki GIST_ID sozlanmagan');
   }
   
+  // Token'ni tozalash
+  const cleanToken = token.trim();
+  
   const url = `https://api.github.com/gists/${gistId}`;
   const payload = {
     files: {
@@ -327,12 +338,17 @@ async function saveGistData(data) {
     }
   };
   
-  console.log('Gist\'ga yozish:', { url, gistId, dataSize: JSON.stringify(data).length });
+  console.log('Gist\'ga yozish:', { 
+    url, 
+    gistId, 
+    dataSize: JSON.stringify(data).length,
+    tokenPrefix: cleanToken ? cleanToken.substring(0, 10) + '...' : 'null'
+  });
   
   const response = await fetch(url, {
     method: 'PATCH',
     headers: {
-      'Authorization': `token ${token}`,
+      'Authorization': `token ${cleanToken}`,
       'Accept': 'application/vnd.github.v3+json',
       'Content-Type': 'application/json'
     },
@@ -356,30 +372,54 @@ async function submitToGist(userId, answers) {
   const token = (typeof CONFIG !== 'undefined' && CONFIG.GITHUB_TOKEN) ? CONFIG.GITHUB_TOKEN : null;
   const gistId = (typeof CONFIG !== 'undefined' && CONFIG.GIST_ID) ? CONFIG.GIST_ID : null;
   
+  // Token formatini tekshirish
+  if (token) {
+    const trimmedToken = token.trim();
+    if (trimmedToken.length === 0) {
+      console.error('❌ Token bo\'sh!');
+    } else if (!trimmedToken.startsWith('ghp_') && !trimmedToken.startsWith('github_pat_')) {
+      console.warn('⚠️ Token format noto\'g\'ri bo\'lishi mumkin. Token "ghp_" yoki "github_pat_" bilan boshlanishi kerak.');
+    }
+  }
+  
   try {
     console.log('GitHub Gist\'ga javob yuborilmoqda...', { 
       userId, 
       answers,
       token: token ? `${token.substring(0, 10)}...` : 'null',
+      tokenLength: token ? token.length : 0,
+      tokenStartsWith: token ? token.substring(0, 4) : 'null',
       gistId: gistId || 'null',
-      configExists: typeof CONFIG !== 'undefined'
+      configExists: typeof CONFIG !== 'undefined',
+      configKeys: typeof CONFIG !== 'undefined' ? Object.keys(CONFIG) : []
     });
     
     if (!token || !gistId) {
-      console.error('⚠️ GITHUB_TOKEN yoki GIST_ID sozlanmagan!');
+      console.error('⚠️ GITHUB_TOKEN yoki GIST_ID sozlanmagan!', {
+        token: token ? 'mavjud' : 'yo\'q',
+        tokenValue: token ? `${token.substring(0, 10)}...` : null,
+        gistId: gistId || 'yo\'q',
+        config: typeof CONFIG !== 'undefined' ? CONFIG : 'config topilmadi'
+      });
       const statusEl = document.getElementById('saving-status');
       if (statusEl) {
         const message = lang === "uz"
-          ? "❌ GitHub Token yoki Gist ID sozlanmagan!<br>Iltimos, config.js faylida GITHUB_TOKEN va GIST_ID ni sozlang."
+          ? "❌ GitHub Token yoki Gist ID sozlanmagan!<br>Iltimos, config.js faylida GITHUB_TOKEN va GIST_ID ni sozlang.<br>Browser console'ni tekshiring."
           : lang === "uz_cyrl"
-          ? "❌ GitHub Token ёки Gist ID сўзланмаган!<br>Илтимос, config.js файлида GITHUB_TOKEN ва GIST_ID ни сўзланг."
+          ? "❌ GitHub Token ёки Gist ID сўзланмаган!<br>Илтимос, config.js файлида GITHUB_TOKEN ва GIST_ID ни сўзланг.<br>Browser console'ни текширинг."
           : lang === "ru"
-          ? "❌ GitHub Token или Gist ID не настроены!<br>Пожалуйста, настройте GITHUB_TOKEN и GIST_ID в файле config.js."
-          : "❌ GitHub Token or Gist ID not configured!<br>Please set GITHUB_TOKEN and GIST_ID in config.js file.";
+          ? "❌ GitHub Token или Gist ID не настроены!<br>Пожалуйста, настройте GITHUB_TOKEN и GIST_ID в файле config.js.<br>Проверьте консоль браузера."
+          : "❌ GitHub Token or Gist ID not configured!<br>Please set GITHUB_TOKEN and GIST_ID in config.js file.<br>Check browser console.";
         statusEl.innerHTML = message;
         statusEl.style.color = "#d32f2f";
       }
       return false;
+    }
+    
+    // Token'ni trim qilish (bo'sh joylar bo'lmasligi uchun)
+    const cleanToken = token.trim();
+    if (cleanToken.length === 0) {
+      throw new Error('Token bo\'sh!');
     }
     
     // Mavjud ma'lumotlarni olish
