@@ -282,6 +282,8 @@ async function getGistData() {
   }
   
   const url = `https://api.github.com/gists/${gistId}`;
+  console.log('Gist\'dan o\'qish:', { url, gistId, tokenPrefix: token ? token.substring(0, 10) + '...' : 'null' });
+  
   const response = await fetch(url, {
     headers: {
       'Authorization': `token ${token}`,
@@ -290,10 +292,19 @@ async function getGistData() {
   });
   
   if (!response.ok) {
-    throw new Error(`Gist API error: ${response.status}`);
+    const errorText = await response.text();
+    console.error('Gist API xatosi:', response.status, errorText);
+    throw new Error(`Gist API error: ${response.status} - ${errorText}`);
   }
   
   const gist = await response.json();
+  
+  // Fayl nomini tekshirish
+  if (!gist.files || !gist.files['responses.json']) {
+    console.error('Gist fayllari:', Object.keys(gist.files || {}));
+    throw new Error('Gist\'da responses.json fayli topilmadi');
+  }
+  
   const content = gist.files['responses.json'].content;
   return JSON.parse(content);
 }
@@ -308,6 +319,16 @@ async function saveGistData(data) {
   }
   
   const url = `https://api.github.com/gists/${gistId}`;
+  const payload = {
+    files: {
+      'responses.json': {
+        content: JSON.stringify(data, null, 2)
+      }
+    }
+  };
+  
+  console.log('Gist\'ga yozish:', { url, gistId, dataSize: JSON.stringify(data).length });
+  
   const response = await fetch(url, {
     method: 'PATCH',
     headers: {
@@ -315,30 +336,34 @@ async function saveGistData(data) {
       'Accept': 'application/vnd.github.v3+json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      files: {
-        'responses.json': {
-          content: JSON.stringify(data, null, 2)
-        }
-      }
-    })
+    body: JSON.stringify(payload)
   });
   
   if (!response.ok) {
-    throw new Error(`Gist API error: ${response.status}`);
+    const errorText = await response.text();
+    console.error('Gist API yozish xatosi:', response.status, errorText);
+    throw new Error(`Gist API error: ${response.status} - ${errorText}`);
   }
   
+  const result = await response.json();
+  console.log('Gist muvaffaqiyatli yangilandi:', result.id);
   return true;
 }
 
 // To'g'ridan-to'g'ri GitHub Gist API'ga javob yuborish
 async function submitToGist(userId, answers) {
+  // Token va Gist ID olish (funksiya boshida)
+  const token = (typeof CONFIG !== 'undefined' && CONFIG.GITHUB_TOKEN) ? CONFIG.GITHUB_TOKEN : null;
+  const gistId = (typeof CONFIG !== 'undefined' && CONFIG.GIST_ID) ? CONFIG.GIST_ID : null;
+  
   try {
-    console.log('GitHub Gist\'ga javob yuborilmoqda...', { userId, answers });
-    
-    // Token va Gist ID tekshirish
-    const token = (typeof CONFIG !== 'undefined' && CONFIG.GITHUB_TOKEN) ? CONFIG.GITHUB_TOKEN : null;
-    const gistId = (typeof CONFIG !== 'undefined' && CONFIG.GIST_ID) ? CONFIG.GIST_ID : null;
+    console.log('GitHub Gist\'ga javob yuborilmoqda...', { 
+      userId, 
+      answers,
+      token: token ? `${token.substring(0, 10)}...` : 'null',
+      gistId: gistId || 'null',
+      configExists: typeof CONFIG !== 'undefined'
+    });
     
     if (!token || !gistId) {
       console.error('⚠️ GITHUB_TOKEN yoki GIST_ID sozlanmagan!');
@@ -402,17 +427,53 @@ async function submitToGist(userId, answers) {
     return true;
   } catch (error) {
     console.error('GitHub Gist\'ga yuborishda xatolik:', error);
+    console.error('Xatolik tafsilotlari:', {
+      message: error.message,
+      stack: error.stack,
+      token: token ? `${token.substring(0, 10)}...` : 'null',
+      gistId: gistId
+    });
     
-    // Status yangilash
+    // Status yangilash - aniq xatolik xabari
     const statusEl = document.getElementById('saving-status');
     if (statusEl) {
-      statusEl.innerHTML = lang === "uz"
-        ? "❌ GitHub Gist'ga yuborishda xatolik! Iltimos, internet aloqasini tekshiring va qayta urinib ko'ring."
-        : lang === "uz_cyrl"
-        ? "❌ GitHub Gist'га юборишда хато! Илтимос, интернет алоқасини текширинг ва қайта уриниб кўринг."
-        : lang === "ru"
-        ? "❌ Ошибка при отправке в GitHub Gist! Пожалуйста, проверьте интернет-соединение и попробуйте снова."
-        : "❌ Error sending to GitHub Gist! Please check your internet connection and try again.";
+      let errorMessage = '';
+      
+      if (error.message.includes('401') || error.message.includes('Unauthorized')) {
+        errorMessage = lang === "uz"
+          ? "❌ Token noto'g'ri yoki muddati tugagan!<br>Iltimos, config.js'da GITHUB_TOKEN ni tekshiring."
+          : lang === "uz_cyrl"
+          ? "❌ Token нотўғри ёки муддати тугаган!<br>Илтимос, config.js'да GITHUB_TOKEN ни текширинг."
+          : lang === "ru"
+          ? "❌ Неверный токен или срок действия истёк!<br>Пожалуйста, проверьте GITHUB_TOKEN в config.js."
+          : "❌ Invalid token or expired!<br>Please check GITHUB_TOKEN in config.js.";
+      } else if (error.message.includes('404') || error.message.includes('Not Found')) {
+        errorMessage = lang === "uz"
+          ? "❌ Gist topilmadi!<br>Iltimos, config.js'da GIST_ID ni tekshiring. Gist ID: " + (gistId || 'sozlanmagan')
+          : lang === "uz_cyrl"
+          ? "❌ Gist топилмади!<br>Илтимос, config.js'да GIST_ID ни текширинг. Gist ID: " + (gistId || 'сўзланмаган')
+          : lang === "ru"
+          ? "❌ Gist не найден!<br>Пожалуйста, проверьте GIST_ID в config.js. Gist ID: " + (gistId || 'не настроен')
+          : "❌ Gist not found!<br>Please check GIST_ID in config.js. Gist ID: " + (gistId || 'not configured');
+      } else if (error.message.includes('403') || error.message.includes('Forbidden')) {
+        errorMessage = lang === "uz"
+          ? "❌ Ruxsat yo'q!<br>Token'da Gist yozish ruxsati yo'q. Iltimos, token'ni yangilang."
+          : lang === "uz_cyrl"
+          ? "❌ Рухсат йўқ!<br>Token'да Gist ёзиш рухсати йўқ. Илтимос, token'ни янгиланг."
+          : lang === "ru"
+          ? "❌ Нет доступа!<br>У токена нет прав на запись в Gist. Пожалуйста, обновите токен."
+          : "❌ Forbidden!<br>Token doesn't have write permission for Gist. Please update token.";
+      } else {
+        errorMessage = lang === "uz"
+          ? `❌ GitHub Gist'ga yuborishda xatolik!<br>Xatolik: ${error.message}<br>Iltimos, browser console'ni tekshiring.`
+          : lang === "uz_cyrl"
+          ? `❌ GitHub Gist'га юборишда хато!<br>Хато: ${error.message}<br>Илтимос, browser console'ни текширинг.`
+          : lang === "ru"
+          ? `❌ Ошибка при отправке в GitHub Gist!<br>Ошибка: ${error.message}<br>Пожалуйста, проверьте консоль браузера.`
+          : `❌ Error sending to GitHub Gist!<br>Error: ${error.message}<br>Please check browser console.`;
+      }
+      
+      statusEl.innerHTML = errorMessage;
       statusEl.style.color = "#d32f2f";
     }
     
