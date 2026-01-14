@@ -1,3 +1,43 @@
-node_modules/
-.DS_Store
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+*.egg-info/
+dist/
+build/
+
+# CSV data files
+responses.csv
+*.csv
+
+# Environment variables
 .env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (agar frontend ham bo'lsa)
+node_modules/
+package-lock.json
+
+# Logs
+*.log
+logs/
+
+# Config files
+config.js

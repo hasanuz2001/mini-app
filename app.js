@@ -2,6 +2,7 @@ let tg = null;
 if (window.Telegram && window.Telegram.WebApp) {
   tg = window.Telegram.WebApp;
   tg.expand();
+  tg.ready();
 }
 
 let current = 0;
@@ -11,14 +12,30 @@ let lang = null;
 
 let t = null;
 
+// Backend API URL - config.js dan olinadi
+const API_BASE = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) 
+  ? CONFIG.API_BASE
+  : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? "http://localhost:8000"
+      : "https://your-backend-url.com"); // Production backend URL'ni qo'ying
 
 const content = document.getElementById("content");
 const progressBar = document.getElementById("progress-bar");
-const DIMENSIONS = {
-  leadership: [5, 6, 7],
-  core: [8, 9, 10],
-  readiness: [11, 12]
-};
+// DIMENSIONS o'chirildi - faqat backend'da saqlash kerak
+
+// Telegram user ID olish
+function getUserId() {
+  if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+    return `tg_${tg.initDataUnsafe.user.id}`;
+  }
+  // Agar Telegram'da emas bo'lsa, random ID yaratish
+  let userId = localStorage.getItem('survey_user_id');
+  if (!userId) {
+    userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    localStorage.setItem('survey_user_id', userId);
+  }
+  return userId;
+}
 
 function renderLanguageSelector() {
   content.innerHTML = `
@@ -57,7 +74,6 @@ function render() {
   // END OF SURVEY CHECK — MUST COME FIRST
   if (current >= questions.length) {
   console.log('Survey finished!');
-  saveResult();
   
   // Ismni answers[1] dan ol
   const userName = answers[1] || "";
@@ -72,12 +88,23 @@ function render() {
     }`;
   }
   
+  // Loading holatini ko'rsatish
   content.innerHTML = `
     <div class="card">
       <h3>${t.finish}</h3>
       <p>${finishMessage}</p>
+      <p style="margin-top: 15px; color: #666; font-size: 14px;" id="saving-status">
+        ${lang === "uz" ? "Javoblar saqlanmoqda..." :
+          lang === "uz_cyrl" ? "Жавоблар сақланмоқда..." :
+          lang === "ru" ? "Ответы сохраняются..." :
+          "Saving responses..."}
+      </p>
     </div>
   `;
+  
+  // Backend'ga yuborish va natijani ko'rsatish
+  saveResult();
+  
   return;
 }
 
@@ -248,47 +275,88 @@ function skipOpenText() {
 
 render();
 
-function scoreAnswer(questionId, answer) {
-  // TODO: Implement scoring logic
-  // For now, return 0
-  return 0;
-}
-
-function calculateScores() {
-  let scores = {
-    leadership: 0,
-    core: 0,
-    readiness: 0
-  };
-
-  Object.entries(DIMENSIONS).forEach(([dim, qIds]) => {
-    qIds.forEach(id => {
-      scores[dim] += scoreAnswer(id, answers[id]);
+// Backend'ga javob yuborish
+async function submitToBackend(userId, answers) {
+  try {
+    console.log('Backend\'ga javob yuborilmoqda...', { userId, answers });
+    
+    const response = await fetch(`${API_BASE}/submit`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        answers: answers
+      })
     });
-  });
 
-  return scores;
-}
-function saveResult() {
-  const scores = calculateScores();
-
-  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-
-  let data = JSON.parse(localStorage.getItem("survey_results") || "{}");
-
-  if (!data[today]) {
-    data[today] = {
-      count: 0,
-      leadership: 0,
-      core: 0,
-      readiness: 0
-    };
+    if (response.ok) {
+      const result = await response.json();
+      console.log('Javoblar backend\'ga muvaffaqiyatli yuborildi:', result);
+      
+      // Status yangilash
+      const statusEl = document.getElementById('saving-status');
+      if (statusEl) {
+        statusEl.innerHTML = lang === "uz" 
+          ? "✅ Javoblar muvaffaqiyatli saqlandi!" 
+          : lang === "uz_cyrl"
+          ? "✅ Жавоблар муваффақиятли сақланди!"
+          : lang === "ru"
+          ? "✅ Ответы успешно сохранены!"
+          : "✅ Responses saved successfully!";
+        statusEl.style.color = "#2e7d32";
+      }
+      
+      return true;
+    } else {
+      const error = await response.text();
+      console.error('Backend xatosi:', response.status, error);
+      
+      // Status yangilash
+      const statusEl = document.getElementById('saving-status');
+      if (statusEl) {
+        statusEl.innerHTML = lang === "uz"
+          ? "⚠️ Backend xatosi, lekin javoblar lokal saqlandi"
+          : lang === "uz_cyrl"
+          ? "⚠️ Бэкенд хатоси, лекин жавоблар локал сақланди"
+          : lang === "ru"
+          ? "⚠️ Ошибка бэкенда, но ответы сохранены локально"
+          : "⚠️ Backend error, but responses saved locally";
+        statusEl.style.color = "#ff9800";
+      }
+      
+      return false;
+    }
+  } catch (error) {
+    console.error('Backend\'ga yuborishda xatolik:', error);
+    
+    // Status yangilash
+    const statusEl = document.getElementById('saving-status');
+    if (statusEl) {
+      statusEl.innerHTML = lang === "uz"
+        ? "⚠️ Internet muammosi, lekin javoblar lokal saqlandi"
+        : lang === "uz_cyrl"
+        ? "⚠️ Интернет муаммоси, лекин жавоблар локал сақланди"
+        : lang === "ru"
+        ? "⚠️ Проблема с интернетом, но ответы сохранены локально"
+        : "⚠️ Internet issue, but responses saved locally";
+      statusEl.style.color = "#ff9800";
+    }
+    
+    return false;
   }
+}
 
-  data[today].count += 1;
-  data[today].leadership += scores.leadership;
-  data[today].core += scores.core;
-  data[today].readiness += scores.readiness;
+function saveResult() {
+  const userId = getUserId();
 
-  localStorage.setItem("survey_results", JSON.stringify(data));
+  // Faqat backend'ga yuborish (localStorage'ga saqlash yo'q)
+  submitToBackend(userId, answers).then(success => {
+    if (success) {
+      console.log('✅ Javoblar backend\'ga muvaffaqiyatli yuborildi');
+    } else {
+      console.error('❌ Backend\'ga yuborishda xatolik yuz berdi');
+    }
+  });
 }
