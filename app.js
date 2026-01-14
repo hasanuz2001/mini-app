@@ -284,13 +284,51 @@ async function getGistData() {
   // Token'ni tozalash
   const cleanToken = token.trim();
   
+  // Token formatini tekshirish
+  if (!cleanToken.startsWith('ghp_') && !cleanToken.startsWith('github_pat_')) {
+    console.error('❌ Token format noto\'g\'ri! Token "ghp_" yoki "github_pat_" bilan boshlanishi kerak.');
+    throw new Error('Token format noto\'g\'ri');
+  }
+  
+  // Token uzunligini tekshirish
+  if (cleanToken.length < 40) {
+    console.error('❌ Token juda qisqa! Token uzunligi kamida 40 ta belgi bo\'lishi kerak.');
+    throw new Error('Token juda qisqa');
+  }
+  
   const url = `https://api.github.com/gists/${gistId}`;
   console.log('Gist\'dan o\'qish:', { 
     url, 
     gistId, 
     tokenPrefix: cleanToken ? cleanToken.substring(0, 10) + '...' : 'null',
-    tokenLength: cleanToken.length
+    tokenLength: cleanToken.length,
+    tokenFormat: cleanToken.substring(0, 4)
   });
+  
+  // Token'ni test qilish (user endpoint orqali)
+  try {
+    const userTestResponse = await fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization': `token ${cleanToken}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    
+    if (!userTestResponse.ok) {
+      const userErrorText = await userTestResponse.text();
+      console.error('❌ Token test xatosi:', userTestResponse.status, userErrorText);
+      
+      if (userTestResponse.status === 401) {
+        throw new Error('Token noto\'g\'ri yoki muddati tugagan. Iltimos, yangi token yarating va config.js\'da yangilang.');
+      }
+    } else {
+      const userData = await userTestResponse.json();
+      console.log('✅ Token ishlayapti! User:', userData.login);
+    }
+  } catch (userError) {
+    console.error('Token test xatosi:', userError);
+    // Token test xatosi bo'lsa ham, Gist'ga urinib ko'ramiz
+  }
   
   const response = await fetch(url, {
     headers: {
@@ -302,6 +340,13 @@ async function getGistData() {
   if (!response.ok) {
     const errorText = await response.text();
     console.error('Gist API xatosi:', response.status, errorText);
+    
+    if (response.status === 401) {
+      throw new Error('Token noto\'g\'ri yoki muddati tugagan. Iltimos, yangi token yarating va config.js\'da yangilang.');
+    } else if (response.status === 404) {
+      throw new Error(`Gist topilmadi (404). Gist ID: ${gistId}. Iltimos, Gist ID\'ni tekshiring yoki yangi Gist yarating.`);
+    }
+    
     throw new Error(`Gist API error: ${response.status} - ${errorText}`);
   }
   
