@@ -12,21 +12,9 @@ let lang = null;
 
 let t = null;
 
-// Backend API URL - config.js dan olinadi yoki default qiymat
-let API_BASE;
-if (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) {
-  API_BASE = CONFIG.API_BASE;
-} else {
-  // Default qiymatlar - config.js bo'lmasa
-  const isLocalhost = window.location.hostname === 'localhost' || 
-                      window.location.hostname === '127.0.0.1';
-  
-  // GitHub Pages yoki production'da default backend URL
-  // Bu qiymatni o'zgartirish kerak bo'lishi mumkin
-  API_BASE = isLocalhost 
-    ? "http://localhost:8000"
-    : "https://your-backend-url.com"; // Production backend URL'ni qo'ying
-}
+// Backend API URL - endi kerak emas, to'g'ridan-to'g'ri Gist API ishlatiladi
+// Lekin orqaga moslik uchun saqlanadi
+let API_BASE = null; // Backend kerak emas, Gist API ishlatiladi
 
 const content = document.getElementById("content");
 const progressBar = document.getElementById("progress-bar");
@@ -284,100 +272,158 @@ function skipOpenText() {
 
 render();
 
-// Backend'ga javob yuborish
-async function submitToBackend(userId, answers) {
+// GitHub Gist API orqali ma'lumotlarni olish
+async function getGistData() {
+  const token = (typeof CONFIG !== 'undefined' && CONFIG.GITHUB_TOKEN) ? CONFIG.GITHUB_TOKEN : null;
+  const gistId = (typeof CONFIG !== 'undefined' && CONFIG.GIST_ID) ? CONFIG.GIST_ID : null;
+  
+  if (!token || !gistId) {
+    throw new Error('GITHUB_TOKEN yoki GIST_ID sozlanmagan');
+  }
+  
+  const url = `https://api.github.com/gists/${gistId}`;
+  const response = await fetch(url, {
+    headers: {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json'
+    }
+  });
+  
+  if (!response.ok) {
+    throw new Error(`Gist API error: ${response.status}`);
+  }
+  
+  const gist = await response.json();
+  const content = gist.files['responses.json'].content;
+  return JSON.parse(content);
+}
+
+// GitHub Gist API orqali ma'lumotlarni saqlash
+async function saveGistData(data) {
+  const token = (typeof CONFIG !== 'undefined' && CONFIG.GITHUB_TOKEN) ? CONFIG.GITHUB_TOKEN : null;
+  const gistId = (typeof CONFIG !== 'undefined' && CONFIG.GIST_ID) ? CONFIG.GIST_ID : null;
+  
+  if (!token || !gistId) {
+    throw new Error('GITHUB_TOKEN yoki GIST_ID sozlanmagan');
+  }
+  
+  const url = `https://api.github.com/gists/${gistId}`;
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      files: {
+        'responses.json': {
+          content: JSON.stringify(data, null, 2)
+        }
+      }
+    })
+  });
+  
+  if (!response.ok) {
+    throw new Error(`Gist API error: ${response.status}`);
+  }
+  
+  return true;
+}
+
+// To'g'ridan-to'g'ri GitHub Gist API'ga javob yuborish
+async function submitToGist(userId, answers) {
   try {
-    console.log('Backend\'ga javob yuborilmoqda...', { 
-      userId, 
-      answers,
-      API_BASE: API_BASE,
-      url: `${API_BASE}/submit`
-    });
+    console.log('GitHub Gist\'ga javob yuborilmoqda...', { userId, answers });
     
-    // Backend URL tekshirish
-    if (API_BASE === "https://your-backend-url.com" || !API_BASE) {
-      console.error('⚠️ Backend URL sozlanmagan!');
+    // Token va Gist ID tekshirish
+    const token = (typeof CONFIG !== 'undefined' && CONFIG.GITHUB_TOKEN) ? CONFIG.GITHUB_TOKEN : null;
+    const gistId = (typeof CONFIG !== 'undefined' && CONFIG.GIST_ID) ? CONFIG.GIST_ID : null;
+    
+    if (!token || !gistId) {
+      console.error('⚠️ GITHUB_TOKEN yoki GIST_ID sozlanmagan!');
       const statusEl = document.getElementById('saving-status');
       if (statusEl) {
         const message = lang === "uz"
-          ? "❌ Backend URL sozlanmagan!<br>Iltimos, config.js faylini yarating (config.js.example dan ko'chiring) va API_BASE ni sozlang."
+          ? "❌ GitHub Token yoki Gist ID sozlanmagan!<br>Iltimos, config.js faylida GITHUB_TOKEN va GIST_ID ni sozlang."
           : lang === "uz_cyrl"
-          ? "❌ Бэкенд URL сўзланмаган!<br>Илтимос, config.js файлини яратинг (config.js.example дан кўчиринг) ва API_BASE ни сўзланг."
+          ? "❌ GitHub Token ёки Gist ID сўзланмаган!<br>Илтимос, config.js файлида GITHUB_TOKEN ва GIST_ID ни сўзланг."
           : lang === "ru"
-          ? "❌ URL бэкенда не настроен!<br>Пожалуйста, создайте файл config.js (скопируйте из config.js.example) и настройте API_BASE."
-          : "❌ Backend URL not configured!<br>Please create config.js file (copy from config.js.example) and set API_BASE.";
+          ? "❌ GitHub Token или Gist ID не настроены!<br>Пожалуйста, настройте GITHUB_TOKEN и GIST_ID в файле config.js."
+          : "❌ GitHub Token or Gist ID not configured!<br>Please set GITHUB_TOKEN and GIST_ID in config.js file.";
         statusEl.innerHTML = message;
         statusEl.style.color = "#d32f2f";
       }
       return false;
     }
     
-    const response = await fetch(`${API_BASE}/submit`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: userId,
-        answers: answers
-      })
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      console.log('Javoblar backend\'ga muvaffaqiyatli yuborildi:', result);
-      
-      // Status yangilash
-      const statusEl = document.getElementById('saving-status');
-      if (statusEl) {
-        statusEl.innerHTML = lang === "uz" 
-          ? "✅ Javoblar muvaffaqiyatli saqlandi!" 
-          : lang === "uz_cyrl"
-          ? "✅ Жавоблар муваффақиятли сақланди!"
-          : lang === "ru"
-          ? "✅ Ответы успешно сохранены!"
-          : "✅ Responses saved successfully!";
-        statusEl.style.color = "#2e7d32";
-      }
-      
-      return true;
-    } else {
-      const error = await response.text();
-      console.error('Backend xatosi:', response.status, error);
-      
-      // Status yangilash
-      const statusEl = document.getElementById('saving-status');
-      if (statusEl) {
-        statusEl.innerHTML = lang === "uz"
-          ? "❌ Backend xatosi! Javoblar saqlanmadi. Iltimos, qayta urinib ko'ring."
-          : lang === "uz_cyrl"
-          ? "❌ Бэкенд хатоси! Жавоблар сақланмади. Илтимос, қайта уриниб кўринг."
-          : lang === "ru"
-          ? "❌ Ошибка бэкенда! Ответы не сохранены. Пожалуйста, попробуйте снова."
-          : "❌ Backend error! Responses not saved. Please try again.";
-        statusEl.style.color = "#d32f2f";
-      }
-      
-      return false;
+    // Mavjud ma'lumotlarni olish
+    let gistData = await getGistData();
+    
+    // Agar gist bo'sh bo'lsa, struktura yaratish
+    if (!gistData || !gistData.timestamp) {
+      gistData = {
+        timestamp: [],
+        user_id: [],
+        question_id: [],
+        answer: []
+      };
     }
+    
+    // Yangi javoblarni qo'shish
+    const timestamp = new Date().toISOString();
+    for (const [qId, answer] of Object.entries(answers)) {
+      gistData.timestamp.push(timestamp);
+      gistData.user_id.push(userId);
+      gistData.question_id.push(String(qId));
+      gistData.answer.push(
+        typeof answer === 'object' ? JSON.stringify(answer) : String(answer)
+      );
+    }
+    
+    // Gist'ga saqlash
+    await saveGistData(gistData);
+    
+    console.log('Javoblar GitHub Gist\'ga muvaffaqiyatli saqlandi!');
+    
+    // Status yangilash
+    const statusEl = document.getElementById('saving-status');
+    if (statusEl) {
+      statusEl.innerHTML = lang === "uz" 
+        ? "✅ Javoblar GitHub Gist'ga muvaffaqiyatli saqlandi!" 
+        : lang === "uz_cyrl"
+        ? "✅ Жавоблар GitHub Gist'га муваффақиятли сақланди!"
+        : lang === "ru"
+        ? "✅ Ответы успешно сохранены в GitHub Gist!"
+        : "✅ Responses saved successfully to GitHub Gist!";
+      statusEl.style.color = "#2e7d32";
+    }
+    
+    return true;
   } catch (error) {
-    console.error('Backend\'ga yuborishda xatolik:', error);
+    console.error('GitHub Gist\'ga yuborishda xatolik:', error);
     
     // Status yangilash
     const statusEl = document.getElementById('saving-status');
     if (statusEl) {
       statusEl.innerHTML = lang === "uz"
-        ? "❌ Internet muammosi! Backend'ga ulanib bo'lmadi. Iltimos, internet aloqasini tekshiring va qayta urinib ko'ring."
+        ? "❌ GitHub Gist'ga yuborishda xatolik! Iltimos, internet aloqasini tekshiring va qayta urinib ko'ring."
         : lang === "uz_cyrl"
-        ? "❌ Интернет муаммоси! Бэкенд'га уланиб бўлмади. Илтимос, интернет алоқасини текширинг ва қайта уриниб кўринг."
+        ? "❌ GitHub Gist'га юборишда хато! Илтимос, интернет алоқасини текширинг ва қайта уриниб кўринг."
         : lang === "ru"
-        ? "❌ Проблема с интернетом! Не удалось подключиться к бэкенду. Пожалуйста, проверьте интернет-соединение и попробуйте снова."
-        : "❌ Internet issue! Could not connect to backend. Please check your internet connection and try again.";
+        ? "❌ Ошибка при отправке в GitHub Gist! Пожалуйста, проверьте интернет-соединение и попробуйте снова."
+        : "❌ Error sending to GitHub Gist! Please check your internet connection and try again.";
       statusEl.style.color = "#d32f2f";
     }
     
     return false;
   }
+}
+
+// Eski funksiya nomi - orqaga moslik uchun
+async function submitToBackend(userId, answers) {
+  // To'g'ridan-to'g'ri Gist API'ga yuborish
+  return await submitToGist(userId, answers);
 }
 
 function saveResult() {
