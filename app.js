@@ -12,12 +12,21 @@ let lang = null;
 
 let t = null;
 
-// Backend API URL - config.js dan olinadi
-const API_BASE = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) 
-  ? CONFIG.API_BASE
-  : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? "http://localhost:8000"
-      : "https://your-backend-url.com"); // Production backend URL'ni qo'ying
+// Backend API URL - config.js dan olinadi yoki default qiymat
+let API_BASE;
+if (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) {
+  API_BASE = CONFIG.API_BASE;
+} else {
+  // Default qiymatlar - config.js bo'lmasa
+  const isLocalhost = window.location.hostname === 'localhost' || 
+                      window.location.hostname === '127.0.0.1';
+  
+  // GitHub Pages yoki production'da default backend URL
+  // Bu qiymatni o'zgartirish kerak bo'lishi mumkin
+  API_BASE = isLocalhost 
+    ? "http://localhost:8000"
+    : "https://your-backend-url.com"; // Production backend URL'ni qo'ying
+}
 
 const content = document.getElementById("content");
 const progressBar = document.getElementById("progress-bar");
@@ -286,17 +295,18 @@ async function submitToBackend(userId, answers) {
     });
     
     // Backend URL tekshirish
-    if (API_BASE === "https://your-backend-url.com") {
-      console.error('⚠️ Backend URL sozlanmagan! config.js faylida API_BASE ni o\'zgartiring.');
+    if (API_BASE === "https://your-backend-url.com" || !API_BASE) {
+      console.error('⚠️ Backend URL sozlanmagan!');
       const statusEl = document.getElementById('saving-status');
       if (statusEl) {
-        statusEl.innerHTML = lang === "uz"
-          ? "❌ Backend URL sozlanmagan! Iltimos, config.js faylida API_BASE ni o'zgartiring."
+        const message = lang === "uz"
+          ? "❌ Backend URL sozlanmagan!<br>Iltimos, config.js faylini yarating (config.js.example dan ko'chiring) va API_BASE ni sozlang."
           : lang === "uz_cyrl"
-          ? "❌ Бэкенд URL сўзланмаган! Илтимос, config.js файлида API_BASE ни ўзгартиринг."
+          ? "❌ Бэкенд URL сўзланмаган!<br>Илтимос, config.js файлини яратинг (config.js.example дан кўчиринг) ва API_BASE ни сўзланг."
           : lang === "ru"
-          ? "❌ URL бэкенда не настроен! Пожалуйста, измените API_BASE в файле config.js."
-          : "❌ Backend URL not configured! Please update API_BASE in config.js file.";
+          ? "❌ URL бэкенда не настроен!<br>Пожалуйста, создайте файл config.js (скопируйте из config.js.example) и настройте API_BASE."
+          : "❌ Backend URL not configured!<br>Please create config.js file (copy from config.js.example) and set API_BASE.";
+        statusEl.innerHTML = message;
         statusEl.style.color = "#d32f2f";
       }
       return false;

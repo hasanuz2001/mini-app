@@ -1,0 +1,14 @@
+// Config fayl namunasi
+// Bu faylni config.js nomiga ko'chiring va qiymatlarni to'ldiring
+
+const CONFIG = {
+    GITHUB_TOKEN: 'your-github-token-here', // GitHub Personal Access Token
+    GIST_ID: 'your-gist-id-here', // GitHub Gist ID (create_gist.py orqali oling)
+    
+    // Backend API URL
+    // Development: http://localhost:8000
+    // Production: Backend deploy qilingan URL (masalan: https://your-app.railway.app)
+    API_BASE: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? "http://localhost:8000"
+      : "https://your-backend-url.com" // Production backend URL'ni qo'ying
+};
