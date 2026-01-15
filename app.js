@@ -27,6 +27,29 @@ function escapeForOnclick(value) {
     .replace(/"/g, "&quot;");
 }
 
+function buildAnswerPayload(optionId, optionText) {
+  return {
+    id: String(optionId),
+    text: String(optionText)
+  };
+}
+
+function getAnswerText(answer) {
+  if (!answer) {
+    return "";
+  }
+  if (typeof answer === "object") {
+    if (typeof answer.text === "string") {
+      return answer.text;
+    }
+    if (answer.selected && typeof answer.selected.text === "string") {
+      return answer.selected.text;
+    }
+    return "";
+  }
+  return String(answer);
+}
+
 // Telegram user ID olish
 function getUserId() {
   if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
@@ -92,7 +115,7 @@ function render() {
   console.log('Survey finished!');
   
   // Ismni answers[1] dan ol
-  const userName = answers[1] || "";
+  const userName = getAnswerText(answers[1]);
   
   let finishMessage = t.thank_you;
   if (userName && userName.trim()) {
@@ -131,9 +154,9 @@ function render() {
   let html = `<div class="card"><p>${q.text[safeLang]}</p>`;
 
   if (q.type === "demographic") {
-    q.options[safeLang].forEach(opt => {
+    q.options[safeLang].forEach((opt, index) => {
       const safeOpt = escapeForOnclick(opt);
-      html += `<button onclick="answer('${safeOpt}')">${opt}</button>`;
+      html += `<button onclick="answerOption('${index + 1}', '${safeOpt}')">${opt}</button>`;
     });
   }
 
@@ -179,7 +202,7 @@ function render() {
       }
 
       const safeOpt = escapeForOnclick(opt);
-      html += `<button onclick="answer('${safeOpt}')">${opt}</button>`;
+      html += `<button onclick="answerOption('${index + 1}', '${safeOpt}')">${opt}</button>`;
     });
 
     if (q.open_option) {
@@ -232,7 +255,7 @@ function render() {
   if (q.type === "likert") {
     html += `<div class="likert">`;
     for (let i = 1; i <= 5; i++) {
-      html += `<button onclick="answer(${i})">${i}</button>`;
+      html += `<button onclick="answerOption('${i}', '${i}')">${i}</button>`;
     }
     html += `</div>`;
   }
@@ -241,9 +264,9 @@ function render() {
   content.innerHTML = html;
 }
 
-function answer(value) {
-  console.log('answer called with:', value, 'current:', current, 'questions.length:', questions.length);
-  answers[questions[current].id] = value;
+function answerOption(optionId, optionText) {
+  console.log('answerOption called with:', optionId, optionText, 'current:', current, 'questions.length:', questions.length);
+  answers[questions[current].id] = buildAnswerPayload(optionId, optionText);
   current++;
   console.log('after increment, current:', current);
   render();
@@ -254,13 +277,10 @@ function submitOpenAnswer() {
   const text = document.getElementById("openAnswer")?.value || "";
   const qId = questions[current].id;
 
-  if (!answers[qId]) {
-    answers[qId] = {};
-  }
-
   answers[qId] = {
-    selected: answers[qId],
-    comment: text
+    id: "open_option",
+    selected: answers[qId] || null,
+    comment: text || ""
   };
 
   console.log('answers updated, incrementing current');
@@ -273,7 +293,10 @@ function submitOpenText() {
   console.log('submitOpenText called, current:', current);
   const text = document.getElementById("openAnswer")?.value || "";
   const qId = questions[current].id;
-  answers[qId] = text;
+  answers[qId] = {
+    id: "open_text",
+    text
+  };
   
   console.log('opentext answer saved:', text);
   current++;
@@ -283,7 +306,10 @@ function submitOpenText() {
 function skipOpenText() {
   console.log('skipOpenText called, current:', current);
   const qId = questions[current].id;
-  answers[qId] = ""; // Bo'sh qatorni saqlash
+  answers[qId] = {
+    id: "open_text",
+    text: ""
+  }; // Bo'sh qatorni saqlash
   
   current++;
   render();
