@@ -4,10 +4,39 @@ body {
   margin: 0;
 }
 
+#content {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
 #app {
   max-width: 480px;
   margin: auto;
   padding: 20px;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  background: #0f172a;
+}
+
+.hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.language-card {
+  text-align: center;
 }
 
 .card {

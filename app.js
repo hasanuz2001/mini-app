@@ -36,14 +36,19 @@ function getUserId() {
 
 function renderLanguageSelector() {
   content.innerHTML = `
-    <div class="card">
-      <h3>Tilni tanlang</h3>
-      <p>Choose language / Выберите язык</p>
+    <div class="landing">
+      <div class="hero">
+        <img src="hero.png" alt="Uran sohasida sun'iy intellekt" />
+      </div>
+      <div class="card language-card">
+        <h3>Tilni tanlang</h3>
+        <p>Choose language / Выберите язык</p>
 
-      <button onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
-      <button onclick="setLanguage('uz_cyrl')">🇺🇿 Ўзбекча (кирил)</button>
-      <button onclick="setLanguage('ru')">🇷🇺 Русский</button>
-      <button onclick="setLanguage('en')">🇬🇧 English</button>
+        <button onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
+        <button onclick="setLanguage('uz_cyrl')">🇺🇿 Ўзбекча (кирил)</button>
+        <button onclick="setLanguage('ru')">🇷🇺 Русский</button>
+        <button onclick="setLanguage('en')">🇬🇧 English</button>
+      </div>
     </div>
   `;
 }
