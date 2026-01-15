@@ -28,7 +28,7 @@ const questions = [
   block: "profile",
   type: "single_choice",
   text: {
-    uz: "Umumiy ish tajribangiz?",
+    uz: "Uran sohasi bilan qo'shganda umumiy ish tajribangiz?",
     uz_cyrl: "Умумий иш тажрибангиз?",
     ru: "Каков ваш общий трудовой стаж?",
     en: "What is your total work experience?"
