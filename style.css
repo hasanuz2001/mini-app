@@ -39,6 +39,12 @@ body {
   text-align: center;
 }
 
+.language-card .subtitle {
+  font-weight: 400;
+  color: #666;
+  font-size: 14px;
+}
+
 .card {
   background: white;
   border-radius: 10px;

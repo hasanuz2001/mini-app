@@ -41,8 +41,7 @@ function renderLanguageSelector() {
         <img src="hero.png" alt="Uran sohasida sun'iy intellekt" />
       </div>
       <div class="card language-card">
-        <h3>Tilni tanlang</h3>
-        <p>Choose language / Выберите язык</p>
+        <h3>Tilni tanlang <span class="subtitle">| Choose language / Выберите язык</span></h3>
 
         <button onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
         <button onclick="setLanguage('uz_cyrl')">🇺🇿 Ўзбекча (кирил)</button>
