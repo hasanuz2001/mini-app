@@ -21,6 +21,45 @@ const questions = [
   index: false
 },
 
+{
+  id: 15,
+  block: "profile",
+  type: "single_choice",
+  text: {
+    uz: "Siz qayerda ishlaysiz?",
+    uz_cyrl: "Сиз қаерда ишлайсиз?",
+    ru: "Где вы работаете?",
+    en: "Where do you work?"
+  },
+  options: {
+    uz: [
+      "\"Navoiyuran\" Davlat korxonasida",
+      "\"Nurliqum mining\" MChJda",
+      "Tog' kon sanoati va geologiya vazirligida",
+      "Uranga taluqli sohada ishlayman"
+    ],
+    uz_cyrl: [
+      "\"Навоийуран\" давлат корхонасида",
+      "\"Нурлиқум майнинг\" МЧЖда",
+      "Тоғ-кон саноати ва геология вазирлигида",
+      "Уранга тааллуқли соҳада ишлайман"
+    ],
+    ru: [
+      "В государственном предприятии \"Навоийуран\"",
+      "В ООО \"Nurliqum mining\"",
+      "В Министерстве горнодобывающей промышленности и геологии",
+      "Работаю в сфере, связанной с ураном"
+    ],
+    en: [
+      "At \"Navoiyuran\" State Enterprise",
+      "At \"Nurliqum mining\" LLC",
+      "At the Ministry of Mining Industry and Geology",
+      "I work in a uranium-related field"
+    ]
+  },
+  index: false
+},
+
 /* ===== BLOK I: PROFIL ===== */
 
 {
