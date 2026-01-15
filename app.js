@@ -42,11 +42,11 @@ function renderLanguageSelector() {
       </div>
       <div class="card language-card">
         <p class="survey-title">
-          Uran qazib olishda sun'iy intellektdan foydalanishga qanday qaraysiz?
+        <h3>  Uran qazib olishda sun'iy intellektdan foydalanishga qanday qaraysiz?
           <br>Как вы относитесь к использованию искусственного интеллекта при добыче урана?
-          <br>How do you feel about using artificial intelligence in uranium mining?
+          <br>How do you feel about using artificial intelligence in uranium mining? </h3>
         </p>
-        <h3>Tilni tanlang | Choose language | Выберите язык</h3>
+        Tilni tanlang | Choose language | Выберите язык
         <button onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
         <button onclick="setLanguage('uz_cyrl')">🇺🇿 Ўзбекча (кирил)</button>
         <button onclick="setLanguage('ru')">🇷🇺 Русский</button>
