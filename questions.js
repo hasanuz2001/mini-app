@@ -68,9 +68,9 @@ const questions = [
   type: "single_choice",
   text: {
     uz: "Uran sohasi bilan qo'shganda umumiy ish tajribangiz?",
-    uz_cyrl: "Умумий иш тажрибангиз?",
-    ru: "Каков ваш общий трудовой стаж?",
-    en: "What is your total work experience?"
+    uz_cyrl: "Уран соҳасини ҳам ҳисобга олганда умумий иш тажрибангиз?",
+    ru: "Каков ваш общий трудовой стаж с учётом сферы урана?",
+    en: "What is your total work experience, including the uranium sector?"
   },
   options: {
     uz: ["0–5 yil", "6–10 yil", "11–20 yil", "20 yildan ortiq"],
