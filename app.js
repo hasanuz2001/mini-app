@@ -522,7 +522,8 @@ async function submitToGist(userId, answers) {
         timestamp: [],
         user_id: [],
         question_id: [],
-        answer: []
+        answer: [],
+        language: []
       };
     }
     
@@ -535,6 +536,7 @@ async function submitToGist(userId, answers) {
       gistData.answer.push(
         typeof answer === 'object' ? JSON.stringify(answer) : String(answer)
       );
+      gistData.language.push(lang || "unknown");
     }
     
     // Gist'ga saqlash
