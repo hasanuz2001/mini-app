@@ -41,12 +41,21 @@ function renderLanguageSelector() {
         <img src="hero.png" alt="Uran sohasida sun'iy intellekt" />
       </div>
       <div class="card language-card">
-        <h3>Tilni tanlang <span class="subtitle">| Choose language / Выберите язык</span></h3>
-
+        <p class="survey-title">
+          Uran qazib olishda sun'iy intellektdan foydalanishga qanday qaraysiz?
+          <br>Как вы относитесь к использованию искусственного интеллекта при добыче урана?
+          <br>How do you feel about using artificial intelligence in uranium mining?
+        </p>
+        <h3>Tilni tanlang | Choose language | Выберите язык</h3>
         <button onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
         <button onclick="setLanguage('uz_cyrl')">🇺🇿 Ўзбекча (кирил)</button>
         <button onclick="setLanguage('ru')">🇷🇺 Русский</button>
         <button onclick="setLanguage('en')">🇬🇧 English</button>
+        <p class="survey-note">
+          *Mazkur so'rovnoma javoblari faqat ilmiy maqsadlarda foydalaniladi
+          <br>*Ответы данного опроса используются только в научных целях
+          <br>*Survey responses are used for scientific purposes only
+        </p>
       </div>
     </div>
   `;
