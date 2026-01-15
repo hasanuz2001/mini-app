@@ -49,8 +49,8 @@ const questions = [
   block: "technology",
   type: "single_choice",
   text: {
-    uz: "Sun’iy intellekt texnik xizmat samaradorligini oshiradi deb o‘ylaysizmi?",
-    uz_cyrl: "Сунъий интеллект техник хизмат самарадорлигини оширади деб ўйлайсизми?",
+    uz: "Uran sohasida sun'iy intellekt texnik xizmat samaradorligini oshiradi deb o‘ylaysizmi?",
+    uz_cyrl: "Уран соҳасида сунъий интеллект техник хизмат самарадорлигини оширади деб ўйлайсизми?",
     ru: "Считаете ли вы, что искусственный интеллект повышает эффективность технического обслуживания?",
     en: "Do you think artificial intelligence improves the efficiency of technical maintenance?"
   },
@@ -89,22 +89,22 @@ const questions = [
   block: "technology",
   type: "single_choice",
   text: {
-    uz: "Sun’iy intellekt qarorlariga qanchalik ishonasiz?",
-    uz_cyrl: "Сунъий интеллект қарорларига қанчалик ишонасиз?",
+    uz: "Uran sohasida sun'iy intellekt qarorlariga qanchalik ishonasiz?",
+    uz_cyrl: "Уран соҳасида сунъий интеллект қарорларига қанчалик ишонасиз?",
     ru: "Насколько вы доверяете решениям, принимаемым искусственным интеллектом?",
     en: "How much do you trust decisions made by artificial intelligence?"
   },
   options: {
     uz: [
       "Men 100% ishonaman",
-      "80% AI, 20% inson qayta ko‘rib chiqishi kerak",
-      "50% AI, 50% inson qarori bo‘lishi kerak",
+      "80% Sun'iy Intellekt, 20% inson qayta ko‘rib chiqishi kerak",
+      "50% Sun'iy Intellekt, 50% inson qarori bo‘lishi kerak",
       "Men juda kam ishonaman, chunki bu uran!"
     ],
     uz_cyrl: [
       "Мен 100% ишонаман",
-      "80% AI, 20% инсон қайта кўриб чиқиши керак",
-      "50% AI, 50% инсон қарори бўлиши керак",
+      "80% Sun'iy Intellekt, 20% инсон қайта кўриб чиқиши керак",
+      "50% Sun'iy Intellekt, 50% инсон қарори бўлиши керак",
       "Мен жуда кам ишонаман, чунки бу уран!"
     ],
     ru: [
@@ -114,10 +114,10 @@ const questions = [
       "Я доверяю ИИ очень мало, так как речь идёт об уране"
     ],
     en: [
-      "I trust AI decisions 100%",
-      "I trust AI 80%, but 20% should be reviewed by humans",
-      "Decisions should be 50% AI and 50% human",
-      "I trust AI very little, because this involves uranium"
+      "I trust Sun'iy Intellekt decisions 100%",
+      "I trust Sun'iy Intellekt 80%, but 20% should be reviewed by humans",
+      "Decisions should be 50% Sun'iy Intellekt and 50% human",
+      "I trust Sun'iy Intellekt very little, because this involves uranium"
     ]
   },
   index: false
@@ -130,8 +130,8 @@ const questions = [
   block: "leadership",
   type: "single_choice",
   text: {
-    uz: "Rahbariyat Sun’iy intellektni joriy etish maqsadini aniq tushuntirdimi?",
-    uz_cyrl: "Раҳбарият Сунъий интеллектни жорий этиш мақсадини аниқ тушунтирдими?",
+    uz: "Rahbariyat Uran sohasida sun'iy intellektni joriy etish maqsadini aniq tushuntirdimi?",
+    uz_cyrl: "Раҳбарият Уран соҳасида сунъий интеллектни жорий этиш мақсадини аниқ тушунтирдими?",
     ru: "Чётко ли руководство объяснило цели внедрения искусственного интеллекта?",
     en: "Did management clearly explain the objectives of implementing artificial intelligence?"
   },
@@ -170,8 +170,8 @@ const questions = [
   block: "leadership",
   type: "single_choice",
   text: {
-    uz: "Rahbarlar Sun’iy intellekt orqali xarajatlar kamayishini tushuntirdimi?",
-    uz_cyrl: "Раҳбарлар Сунъий интеллект орқали харажатлар камайишини тушунтирдими?",
+    uz: "Rahbarlar Uran sohasida sun'iy intellekt orqali xarajatlar kamayishini tushuntirdimi?",
+    uz_cyrl: "Раҳбарлар Уран соҳасида сунъий интеллект орқали харажатлар камайишини тушунтирдими?",
     ru: "Объяснило ли руководство, как ИИ поможет сократить затраты?",
     en: "Did management explain how artificial intelligence would reduce costs?"
   },
@@ -210,8 +210,8 @@ const questions = [
   block: "leadership",
   type: "single_choice",
   text: {
-    uz: "Sun’iy intellekt joriy etishda mutaxassislar fikri inobatga olinadi deb o‘ylaysizmi?",
-    uz_cyrl: "Сунъий интеллект жорий этишда мутахассислар фикри инобатга олинади деб ўйлайсизми?",
+    uz: "Uran sohasida sun'iy intellekt joriy etishda mutaxassislar fikri inobatga olinadi deb o‘ylaysizmi?",
+    uz_cyrl: "Уран соҳасида сунъий интеллект жорий этишда мутахассислар фикри инобатга олинади деб ўйлайсизми?",
     ru: "Считаете ли вы, что мнение специалистов учитывается при внедрении ИИ?",
     en: "Do you think experts’ opinions are taken into account when implementing AI?"
   },
@@ -252,22 +252,22 @@ const questions = [
   block: "resistance",
   type: "single_choice",
   text: {
-    uz: "Sun’iy intellekt ish o‘rnimga xavf soladi deb o‘ylaysizmi?",
-    uz_cyrl: "Сунъий интеллект иш ўрнимга хавф солади деб ўйлайсизми?",
+    uz: "Uran sohasida sun'iy intellekt ish o‘rnimga xavf soladi deb o‘ylaysizmi?",
+    uz_cyrl: "Уран соҳасида сунъий интеллект иш ўрнимга хавф солади деб ўйлайсизми?",
     ru: "Считаете ли вы, что искусственный интеллект угрожает вашему рабочему месту?",
     en: "Do you think artificial intelligence threatens your job?"
   },
   options: {
     uz: [
       "Ha, ish o‘rnimni yo‘qotishim mumkin deb o‘ylayman",
-      "Sun’iy intellekt bilan birga ishlayman, yangi vazifalar yuklanadi",
-      "Sun’iy intellekt baribir meni to‘liq almashtira olmaydi",
+      "Uran sohasida sun'iy intellekt bilan birga ishlayman, yangi vazifalar yuklanadi",
+      "Uran sohasida sun'iy intellekt baribir meni to‘liq almashtira olmaydi",
        "Mening fikrim quyidagicha:"
     ],
     uz_cyrl: [
       "Ҳа, иш ўрнимни йўқотишим мумкин деб ўйлайман",
-      "Сунъий интеллект билан бирга ишлайман, янги вазифалар юкланади",
-      "Сунъий интеллект барибир мени тўлиқ алмаштира олмайди",
+      "Уран соҳасида сунъий интеллект билан бирга ишлайман, янги вазифалар юкланади",
+      "Уран соҳасида сунъий интеллект барибир мени тўлиқ алмаштира олмайди",
       "Менинг фикрим қуйидагича:"
     ],
     ru: [
@@ -278,8 +278,8 @@ const questions = [
     ],
     en: [
       "Yes, I think I might lose my job",
-      "I will work alongside AI and take on new tasks",
-      "AI will not be able to fully replace me",
+      "I will work alongside Sun'iy Intellekt and take on new tasks",
+      "Sun'iy Intellekt will not be able to fully replace me",
       "In my opinion:"
     ]
   },
@@ -292,8 +292,8 @@ const questions = [
   block: "resistance",
   type: "single_choice",
   text: {
-    uz: "Sun’iy intellekt xato qilsa, javobgarlik noaniq deb hisoblaysizmi?",
-    uz_cyrl: "Сунъий интеллект хато қилса, жавобгарлик ноаниқ деб ҳисоблайсизми?",
+    uz: "Uran sohasida sun'iy intellekt xato qilsa, javobgarlik noaniq deb hisoblaysizmi?",
+    uz_cyrl: "Уран соҳасида сунъий интеллект хато қилса, жавобгарлик ноаниқ деб ҳисоблайсизми?",
     ru: "Считаете ли вы, что в случае ошибки ИИ ответственность будет неясной?",
     en: "Do you think accountability is unclear if artificial intelligence makes a mistake?"
   },
@@ -312,8 +312,8 @@ const questions = [
   block: "resistance",
   type: "single_choice",
   text: {
-    uz: "Sun’iy intellektga ishonish psixologik jihatdan qiyin deb hisoblaysizmi?",
-    uz_cyrl: "Сунъий интеллектга ишониш психологик жиҳатдан қийин деб ҳисоблайсизми?",
+    uz: "Uran sohasida sun'iy intellektga ishonish psixologik jihatdan qiyin deb hisoblaysizmi?",
+    uz_cyrl: "Уран соҳасида сунъий интеллектга ишониш психологик жиҳатдан қийин деб ҳисоблайсизми?",
     ru: "Считаете ли вы, что психологически сложно доверять искусственному интеллекту?",
     en: "Do you find it psychologically difficult to trust artificial intelligence?"
   },
@@ -350,8 +350,8 @@ const questions = [
   block: "readiness",
   type: "single_choice",
   text: {
-    uz: "Sun’iy intellektdan foydalanish bo‘yicha yetarli trening berildimi?",
-    uz_cyrl: "Сунъий интеллектдан фойдаланиш бўйича етарли тренинг берилдими?",
+    uz: "Uran sohasida sun'iy intellektdan foydalanish bo‘yicha yetarli trening berildimi?",
+    uz_cyrl: "Уран соҳасида сунъий интеллектдан фойдаланиш бўйича етарли тренинг берилдими?",
     ru: "Было ли предоставлено достаточное обучение по использованию ИИ?",
     en: "Was sufficient training provided on how to use artificial intelligence?"
   },
@@ -439,8 +439,8 @@ const questions = [
   block: "validation",
   type: "single_choice",
   text: {
-    uz: "Sun’iy intellektni muvaffaqiyatli joriy etish asosan rahbariyatga bog‘liq deb o‘ylaysizmi?",
-    uz_cyrl: "Сунъий интеллектни муваффақиятли жорий этиш асосан раҳбариятга боғлиқ деб ўйлайсизми?",
+    uz: "Uran sohasida sun'iy intellektni muvaffaqiyatli joriy etish asosan rahbariyatga bog‘liq deb o‘ylaysizmi?",
+    uz_cyrl: "Уран соҳасида сунъий интеллектни муваффақиятли жорий этиш асосан раҳбариятга боғлиқ деб ўйлайсизми?",
     ru: "Считаете ли вы, что успешное внедрение ИИ в основном зависит от руководства?",
     en: "Do you think successful implementation of artificial intelligence mainly depends on management?"
   },
