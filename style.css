@@ -36,11 +36,11 @@ body {
 }
 
 .language-card {
-  text-align: center;
+  text-align: left;
 }
 
 .survey-title {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   font-size: 14px;
   line-height: 1.4;
   color: #1f2937;

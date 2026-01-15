@@ -41,10 +41,10 @@ function renderLanguageSelector() {
         <img src="hero.png" alt="Uran sohasida sun'iy intellekt" />
       </div>
       <div class="card language-card">
-        <p class="survey-title">
-         <h5> <br>Как вы относитесь к использованию искусственного интеллекта при добыче урана?
-         <br>How do you feel about using artificial intelligence in uranium mining? </h5>
-        </p>
+        <div class="survey-title">
+          <div>(RU) Как вы относитесь к использованию искусственного интеллекта при добыче урана?</div>
+          <div>(EN) How do you feel about using artificial intelligence in uranium mining?</div>
+        </div>
         <button onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
         <button onclick="setLanguage('uz_cyrl')">🇺🇿 Ўзбекча (кирил)</button>
         <button onclick="setLanguage('ru')">🇷🇺 Русский</button>
