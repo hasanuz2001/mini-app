@@ -20,6 +20,13 @@ const content = document.getElementById("content");
 const progressBar = document.getElementById("progress-bar");
 // DIMENSIONS o'chirildi - faqat backend'da saqlash kerak
 
+function escapeForOnclick(value) {
+  return value
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'")
+    .replace(/"/g, "&quot;");
+}
+
 // Telegram user ID olish
 function getUserId() {
   if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
@@ -125,7 +132,8 @@ function render() {
 
   if (q.type === "demographic") {
     q.options[safeLang].forEach(opt => {
-      html += `<button onclick="answer('${opt}')">${opt}</button>`;
+      const safeOpt = escapeForOnclick(opt);
+      html += `<button onclick="answer('${safeOpt}')">${opt}</button>`;
     });
   }
 
@@ -170,7 +178,7 @@ function render() {
         return;
       }
 
-      const safeOpt = opt.replace(/'/g, "\\'");
+      const safeOpt = escapeForOnclick(opt);
       html += `<button onclick="answer('${safeOpt}')">${opt}</button>`;
     });
 
