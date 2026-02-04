@@ -567,16 +567,25 @@ async function submitToGist(userId, answers) {
     
     console.log('Javoblar GitHub Gist\'ga muvaffaqiyatli saqlandi!');
     
-    // Status yangilash
+    // Status yangilash va natijalar sahifasiga link
     const statusEl = document.getElementById('saving-status');
+    const resultsUrl = "https://hasanuz2001.github.io/mini-app-results/";
+    const linkLabel = lang === "uz"
+      ? "Natijalarni ko'rish"
+      : lang === "uz_cyrl"
+      ? "Натижаларни кўриш"
+      : lang === "ru"
+      ? "Посмотреть результаты"
+      : "View results";
     if (statusEl) {
-      statusEl.innerHTML = lang === "uz" 
+      statusEl.innerHTML = (lang === "uz" 
         ? "✅ Javoblar GitHub Gist'ga muvaffaqiyatli saqlandi!" 
         : lang === "uz_cyrl"
         ? "✅ Жавоблар GitHub Gist'га муваффақиятли сақланди!"
         : lang === "ru"
         ? "✅ Ответы успешно сохранены в GitHub Gist!"
-        : "✅ Responses saved successfully to GitHub Gist!";
+        : "✅ Responses saved successfully to GitHub Gist!") +
+        `<br><br><a href="${resultsUrl}" target="_blank" rel="noopener" style="color:#2a9df4;font-weight:600;text-decoration:underline;">${linkLabel} →</a>`;
       statusEl.style.color = "#2e7d32";
     }
     
