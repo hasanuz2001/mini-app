@@ -22,7 +22,7 @@ const questions = [
 },
 
 {
-  id: 15,
+  id: "1a",
   block: "profile",
   type: "single_choice",
   text: {
@@ -65,7 +65,7 @@ const questions = [
 },
 
 {
-  id: 16,
+  id: "1b",
   block: "profile",
   type: "single_choice",
   text: {
@@ -105,7 +105,7 @@ const questions = [
     ]
   },
   showWhen: {
-    questionId: 15,
+    questionId: "1a",
     notAnswer: ["Men uran sohasida ishlamayman.", "Мен уран соҳасида ишламайман.", "Я не работаю в урановой отрасли.", "I do not work in the uranium sector."]
   },
   index: false
