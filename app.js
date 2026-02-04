@@ -147,7 +147,30 @@ function render() {
   return;
 }
 
-  const q = questions[current];
+  let q = questions[current];
+
+  // Shartli savollar: showWhen bo'lsa va shart bajarilmasa, savolni o'tkazib yuborish
+  while (q && q.showWhen) {
+    const dep = q.showWhen;
+    const prevAnswer = getAnswerText(answers[dep.questionId] || "");
+    const shouldSkip = (dep.notAnswer || []).some(function (a) {
+      return prevAnswer.trim() === a.trim();
+    });
+    if (shouldSkip) {
+      current++;
+      if (current >= questions.length) break;
+      q = questions[current];
+    } else {
+      break;
+    }
+  }
+
+  if (current >= questions.length) {
+    render();
+    return;
+  }
+
+  q = questions[current];
   const safeLang = (q.text && q.text[lang]) ? lang : "uz";
   progressBar.style.width = ((current / questions.length) * 100) + "%";
 
