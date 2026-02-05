@@ -267,28 +267,28 @@ const questions = [
   },
   options: {
     uz: [
-      "Ha, bunga qo‘shilaman",
-      "Qisman qo‘shilaman",
-      "Masalaning ikkinchi tomoni ham bor, yaxshilab o‘ylash kerak",
-      "Mening fikrim quyidagicha:"
+      "Ha, tushuntirdi",
+      "Ha, qisman tushuntirdi",
+      "Yo‘q, tushuntirish bermadi",
+      "Meni fikrimcha tushuntirish quyidagicha bo‘lishi kerak:"
     ],
     uz_cyrl: [
-      "Ҳа, бунга қўшиламан",
-      "Қисман қўшиламан",
-      "Масаланинг иккинчи томони ҳам бор, яхшилаб ўйлаш керак",
-      "Менинг фикрим қуйидагича:"
+      "Ҳа, тушунтирди",
+      "Ҳа, қисман тушунтирди",
+      "Йўқ, тушунтириш бермади",
+      "Мени фикримча тушунтириш қуйидагича бўлиши керак:"
     ],
     ru: [
-      "Да, я с этим согласен(на)",
-      "Частично согласен(на)",
-      "Есть и другая сторона, это нужно тщательно продумать",
-      "По моему мнению:"
+      "Да, объяснило",
+      "Объяснило частично",
+      "Нет, не объяснило",
+      "По моему мнению, объяснение должно быть таким:"
     ],
     en: [
-      "Yes, I agree with this",
-      "I partially agree",
-      "There is another side to this that needs careful consideration",
-      "In my opinion:"
+      "Yes, they explained",
+      "Yes, they partially explained",
+      "No, they did not explain",
+      "In my opinion, the explanation should be:"
     ]
   },
   open_option: true,
