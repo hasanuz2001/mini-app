@@ -76,10 +76,10 @@ function renderLanguageSelector() {
         <div><h4>(EN) How do you view the use of artificial intelligence in uranium mining?</h4></div>  
         <div><h4>(RU) Как вы относитесь к использованию искусственного интеллекта при добыче урана?</h4></div>
          </div>
-        <button onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
         <button onclick="setLanguage('uz_cyrl')">🇺🇿 Ўзбекча (кирил)</button>
-        <button onclick="setLanguage('ru')">🇷🇺 Русский</button>
+        <button onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
         <button onclick="setLanguage('en')">🇬🇧 English</button>
+        <button onclick="setLanguage('ru')">🇷🇺 Русский</button>
         <p class="survey-note">
           *Mazkur so'rovnoma javoblari faqat ilmiy maqsadlarda foydalaniladi
           <br>*Ответы данного опроса используются только в научных целях
